@@ -1,0 +1,26 @@
+.navContainer {
+    border-radius: 8px;
+    margin-top: 1px;
+    background-color: white;
+    box-shadow: 0px 0px 10px 2px gray;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:0px 20px 0px 10px;
+}
+
+.leftPanel {
+margin-top:5px;
+}
+
+.rightPanel {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 60px; /* space between links */
+    font-size: 18px;
+    
+}
+.rightPanel a{
+    text-decoration: none;
+    font-weight: 600;
+}
