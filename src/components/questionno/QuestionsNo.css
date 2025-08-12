@@ -1,0 +1,107 @@
+.question-panel {
+  width: 100%;
+  max-width: 200px;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 12px;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+}
+
+/* Legend styling */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  border-radius: 50%;
+}
+.legend-dot.marked { background-color: purple; }
+.legend-dot.attempted { background-color: #007bff; }
+.legend-dot.unattempted { background-color: red; }
+.legend-dot.notVisited { background-color: grey; }
+.legend-dot.attemptedMarked { background-color: #5bc0de; }
+
+/* Question grid */
+.questions-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+  margin-bottom: 15px;
+}
+.question-btn {
+  width: 32px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background-color: white;
+  font-weight: bold;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Status styles */
+.question-btn.current {
+  background-color: #ffcc00;
+  border-color: #e6b800;
+}
+.question-btn.attempted {
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+.question-btn.unattempted {
+  border: 2px solid red;
+  color: red;
+  background-color: white;
+}
+.question-btn.marked {
+  border: 2px solid purple;
+  color: purple;
+  background-color: white;
+}
+.question-btn.attemptedMarked {
+  background-color: #5bc0de;
+  color: white;
+  border: none;
+}
+.question-btn.notVisited {
+  background-color: white;
+  color: grey;
+  border: 1px solid #ccc;
+}
+
+/* Hover effect */
+.question-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Bottom buttons */
+.bottom-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.submit-section {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.submit-test {
+  background: #0a66ff;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
