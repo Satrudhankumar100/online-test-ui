@@ -1,0 +1,53 @@
+.main-container {
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.h3 {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.question {
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.option {
+  background-color: #eaf3ff;
+  padding: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  font-size: 16px;
+  display: block;
+}
+
+.option:hover {
+  background-color: #d4e6ff;
+}
+
+/* Hide radio button circle */
+.option input[type="radio"] {
+  display: none;
+}
+
+/* Highlight selected option */
+.option input[type="radio"]:checked + span {
+  background-color: #c6e0ff;
+  font-weight: bold;
+  display: block;
+}
