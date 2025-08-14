@@ -1,0 +1,26 @@
+.nav{
+    margin: auto;
+    width: 98%;
+    box-shadow: 2px 0px 3px gray;
+    border-radius: 10px;
+    color:white;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    
+}
+.subject{
+    color:black;
+    font-weight: bold;
+    font-size: 30px;
+}
+.maincontainer{
+    display: flex;
+    justify-content: space-evenly;
+}
+.questionans{
+    width: 300%;
+}
+.questionno{
+    width: 100%;
+}

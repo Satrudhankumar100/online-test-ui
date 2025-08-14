@@ -47,7 +47,7 @@ const QuestionsNo = () => {
 
       {/* Bottom Buttons */}
       <div className="bottom-buttons">
-        <button className="submit-section">Submit Section</button>
+       
         <button className="submit-test">Submit Test</button>
       </div>
     </div>

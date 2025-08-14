@@ -1,5 +1,5 @@
 .main-container {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 20px auto;
   background-color: white;
   padding: 20px;
@@ -27,7 +27,7 @@
 }
 
 .option {
-  background-color: #eaf3ff;
+  background-color: #f2f4f6;
   padding: 15px;
   border-radius: 8px;
   cursor: pointer;
