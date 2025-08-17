@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./QuestionsNo.css";
 
-const QuestionsNo = () => {
-  const totalQuestions = 50;
+
+const QuestionsNo = ({changeQuestionIndex ,totalQuestions}) => {
+  
 
   // Example status for demo purposes
   const [statuses] = useState({
@@ -13,9 +14,10 @@ const QuestionsNo = () => {
     5: "attemptedMarked",
   });
 
-  const handleClick = (num) => {
-    alert(`Question ${num} clicked`);
+  const handleClick = (num) => { 
+    changeQuestionIndex(num-1)
   };
+  
 
   return (
     <div className="question-panel">
@@ -36,14 +38,14 @@ const QuestionsNo = () => {
           return (
             <button
               key={qNum}
-              className={`question-btn ${statusClass}`}
+              className={`question-btn notVisited`}
               onClick={() => handleClick(qNum)}
             >
               {qNum}
             </button>
           );
         })}
-      </div>
+      </div> 
 
       {/* Bottom Buttons */}
       <div className="bottom-buttons">
