@@ -7,10 +7,12 @@ import QuestionAns from '../components/questionans/QuestionAns'
 const Home = () => {
   return (
     <>
-        {/* <Header/> */}
-        {/* <Instruction/> */}
+        <Header/>
+        <Instruction/>
         {/* <QuestionsNo/> */}
         {/* <QuestionAns/> */}
+        
+        
         
     </>
   )

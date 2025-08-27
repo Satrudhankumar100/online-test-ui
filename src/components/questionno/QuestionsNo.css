@@ -53,19 +53,19 @@
   border-color: #e6b800;
 }
 .question-btn.attempted {
-  background-color: #007bff;
+  background-color: #0a2;
   color: white;
   border: none;
 }
 .question-btn.unattempted {
   border: 2px solid red;
-  color: red;
-  background-color: white;
+  color: white;
+  background-color: red;
 }
 .question-btn.marked {
-  border: 2px solid purple;
-  color: purple;
-  background-color: white;
+  border: 2px solid balck;
+  color: white;
+  background-color: purple;
 }
 .question-btn.attemptedMarked {
   background-color: #5bc0de;

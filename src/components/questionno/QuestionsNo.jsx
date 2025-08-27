@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./QuestionsNo.css";
+import QuestionStatus from "../../constants/QuestionStatus";
 
 
 const QuestionsNo = ({changeQuestionIndex ,totalQuestions}) => {
@@ -32,16 +33,15 @@ const QuestionsNo = ({changeQuestionIndex ,totalQuestions}) => {
 
       {/* Number Grid */}
       <div className="questions-container">
-        {Array.from({ length: totalQuestions }, (_, i) => {
-          const qNum = i + 1;
-          const statusClass = statuses[qNum] || "notVisited";
+        {totalQuestions?.map((currQues,i) => {
+          
           return (
             <button
-              key={qNum}
-              className={`question-btn notVisited`}
-              onClick={() => handleClick(qNum)}
+              key={currQues?.questionNo}
+              className={`question-btn ${currQues?.isCurrent?QuestionStatus.CURRENT: currQues?.questionStatus}`}
+              onClick={() => handleClick(currQues?.questionNo)}
             >
-              {qNum}
+              {currQues?.questionNo}
             </button>
           );
         })}
