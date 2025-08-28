@@ -8,6 +8,9 @@ export const initializeQuestionStatus = (totalQuestions) => {
   }));
 };
 
+
+
+
 // function to update a particular question's status
 export const updateQuestionStatus = (prevStatuses, index, newStatus) => {
   return prevStatuses.map((q, i) =>

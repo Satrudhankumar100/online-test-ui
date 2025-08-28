@@ -12,9 +12,7 @@ const Test = () => {
     
     const [questionIndex, setQuestionIndex] = useState(0);
 
-    const[questionStatus,setSquestionStatus]=useState(
-      
-    );
+    const[questionStatus,setSquestionStatus]=useState();
     
      
       const changeQuestionIndex=(index)=>{
