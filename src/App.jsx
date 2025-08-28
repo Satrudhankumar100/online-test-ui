@@ -5,6 +5,8 @@ import TestSeries from "./components/testseries/TestSeries";
 import PageNotFound from "./components/pagenotfound/PageNotFound";
 import Home from "./screens/Home";
 import Test from "./screens/Test";
+import Leaderboard from "./screens/Leaderboard";
+import TestReviewSolution from "./screens/TestReviewSolution";
 
 function App() {
   
@@ -17,6 +19,9 @@ function App() {
        <Route path={"/"} element={<Home/>}></Route>
        <Route path={"/testseries"} element={<TestSeries/>}></Route>
        <Route path={"/start-test"} element={<Test/>}></Route>
+       <Route path={"/result"} element={<Leaderboard/>}></Route>
+      
+       <Route path={"/review"} element={<TestReviewSolution/>}></Route>
       
       
        <Route path={"/*"} element={<PageNotFound/>}></Route>

@@ -12,10 +12,6 @@ const Test = () => {
 
   let question = data.length;
 
-<<<<<<< HEAD
-    const[questionStatus,setSquestionStatus]=useState();
-    
-=======
   const [questionIndex, setQuestionIndex] = useState(0);
 
   const [questionStatus, setQuestionStatus] = useLocalStorage(
@@ -85,7 +81,6 @@ const handleIsCurrentQuestion = (currIndex)=>{
          handleIsCurrentQuestion(questionIndex-1);
         return questionIndex - 1
       });
->>>>>>> 525c2fcfa2ee96c69c59b5320022c0e71b12f904
      
     }
     
