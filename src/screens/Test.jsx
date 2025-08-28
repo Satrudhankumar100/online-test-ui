@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CountdownTimer from '../components/timer/CountDownTimer'
 import './Test.css';
 import QuestionAns from '../components/questionans/QuestionAns'
@@ -24,6 +24,10 @@ const Test = () => {
     }))
   );
 
+  useEffect(()=>{
+    handleIsCurrentQuestion(questionIndex);
+  },[])
+
 
   const handleSetQuestionStatus = (currIndex, currQuestionStatus, updatedOptAnswer = '') => {
   setQuestionStatus(prev =>
@@ -32,7 +36,7 @@ const Test = () => {
         return {
           ...q,
           optAnswer: updatedOptAnswer !== '' ? updatedOptAnswer : q.optAnswer, // update only if provided
-          questionStatus: currQuestionStatus
+          questionStatus: q.questionStatus===QuestionStatus.ATTEMPTED? QuestionStatus.ATTEMPTED :currQuestionStatus
         };
       }
       return q;
@@ -40,16 +44,19 @@ const Test = () => {
   );
 };
 
-const handleIsCurrentQuestion = (currIndex,isCurrQuestion)=>{
+const handleIsCurrentQuestion = (currIndex)=>{
     setQuestionStatus(prev =>
     prev.map((q, index) => {
       if (index === currIndex) {
         return {
-          ...q,isCurrent:isCurrQuestion
+          ...q,isCurrent:true
           
         };
       }
-      return q;
+      return  {
+          ...q,isCurrent:false
+          
+        };;
     })
   );
 
@@ -58,20 +65,20 @@ const handleIsCurrentQuestion = (currIndex,isCurrQuestion)=>{
 
 
   const changeQuestionIndex = (index) => {
-   handleIsCurrentQuestion(questionIndex,false);
+   
    questionStatus[questionIndex].optAnswer===''?  handleSetQuestionStatus(questionIndex,QuestionStatus.UNATTEMPTED) : handleSetQuestionStatus(questionIndex,QuestionStatus.ATTEMPTED_MARKED)
 
     setQuestionIndex(index)
-    handleIsCurrentQuestion(index,true);
+    handleIsCurrentQuestion(index);
   }
 
   const handlePreviousQuestionBtn = () => {
     if (questionIndex != 0) {
-       questionStatus[questionIndex].optAnswer===''?  handleSetQuestionStatus(questionIndex,QuestionStatus.UNATTEMPTED) : handleSetQuestionStatus(questionIndex,QuestionStatus.ATTEMPTED)
+       questionStatus[questionIndex].optAnswer===''?  handleSetQuestionStatus(questionIndex,QuestionStatus.UNATTEMPTED) : handleSetQuestionStatus(questionIndex,QuestionStatus.ATTEMPTED_MARKED)
 
      setQuestionIndex(prev=>{
-         handleIsCurrentQuestion(questionIndex,false);
-         handleIsCurrentQuestion(questionIndex-1,true);
+         
+         handleIsCurrentQuestion(questionIndex-1);
         return questionIndex - 1
       });
      
@@ -87,8 +94,8 @@ const handleIsCurrentQuestion = (currIndex,isCurrQuestion)=>{
       questionStatus[questionIndex].optAnswer===''?  handleSetQuestionStatus(questionIndex,QuestionStatus.UNATTEMPTED) : handleSetQuestionStatus(questionIndex,QuestionStatus.ATTEMPTED)
 
       setQuestionIndex(prev=>{
-         handleIsCurrentQuestion(questionIndex,false);
-         handleIsCurrentQuestion(questionIndex+1,true);
+        
+         handleIsCurrentQuestion(questionIndex+1);
         return questionIndex + 1
       });
 
@@ -111,8 +118,8 @@ const handleIsCurrentQuestion = (currIndex,isCurrQuestion)=>{
       questionStatus[questionIndex].optAnswer===QuestionStatus.ATTEMPTED_MARKED?  handleSetQuestionStatus(questionIndex,QuestionStatus.ATTEMPTED_MARKED) : handleSetQuestionStatus(questionIndex,QuestionStatus.MARKED)
 
       setQuestionIndex(prev=>{
-         handleIsCurrentQuestion(questionIndex,false);
-         handleIsCurrentQuestion(questionIndex+1,true);
+         
+         handleIsCurrentQuestion(questionIndex+1);
         return questionIndex + 1
       });
 
@@ -129,7 +136,7 @@ const handleIsCurrentQuestion = (currIndex,isCurrQuestion)=>{
         <div className="timer">
           <CountdownTimer />
         </div>
-        <div className="subject">DIGITAL ELECTRONIC</div>
+        <div className="subject">Operating System</div>
 
       </div>
 
@@ -143,10 +150,10 @@ const handleIsCurrentQuestion = (currIndex,isCurrQuestion)=>{
         </div>
 
       </div>
-      <div className="btnSection">
-        <button className='btnS' onClick={handlePreviousQuestionBtn}>Previus</button>
-        <button className='btnS' onClick={handleMarkAndReview}  >Mark for Review</button>
-        <button className='btnS' onClick={handleNextSaveQuestionBtn}>Next/Save</button>
+      <div className="btnSection flex gap-2 px-4 font-semibold">
+        <button className='border-gray-400 border-2 px-3 py-2 rounded-md cursor-pointer' onClick={handlePreviousQuestionBtn}>Previous</button>
+        <button className='bg-purple-800 px-3 py-2 rounded-md cursor-pointer text-white' onClick={handleMarkAndReview}  >Mark for Review</button>
+        <button className='bg-green-400 px-3 py-2 rounded-md cursor-pointer text-white' onClick={handleNextSaveQuestionBtn}>Next/Save</button>
 
       </div>
 
