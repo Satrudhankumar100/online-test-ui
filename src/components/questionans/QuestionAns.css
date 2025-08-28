@@ -31,7 +31,7 @@
   padding: 15px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s ease;
+
   font-size: 16px;
   display: block;
 }
@@ -46,8 +46,9 @@
 }
 
 /* Highlight selected option */
-.option input[type="radio"]:checked + span {
-  background-color: #c6e0ff;
+.option.selected {
+  background-color: rgb(27, 173, 27);
+  color:#fff;
   font-weight: bold;
   display: block;
 }
