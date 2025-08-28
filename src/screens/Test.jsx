@@ -6,67 +6,69 @@ import QuestionNo from '../components/questionno/QuestionsNo'
 import { data } from '../screens/data.js';
 import { useLocalStorage } from '../hooks/useLocalStorage.js';
 import QuestionStatus from '../constants/QuestionStatus.js';
+import { Link } from 'react-router-dom';
 
 const Test = () => {
 
 
   let question = data.length;
+  const [modelPopup, setModelPopup] = useState(false);
 
   const [questionIndex, setQuestionIndex] = useState(0);
 
   const [questionStatus, setQuestionStatus] = useLocalStorage(
     "questionStatus",
     Array.from({ length: data.length }, (v, i) => ({
-      questionNo: i+1,
+      questionNo: i + 1,
       optAnswer: "",
       questionStatus: QuestionStatus.NOT_VISITED,
-      isCurrent:i===0
+      isCurrent: i === 0
     }))
   );
 
-  useEffect(()=>{
+  useEffect(() => {
     handleIsCurrentQuestion(questionIndex);
-  },[])
+  }, [])
 
 
   const handleSetQuestionStatus = (currIndex, currQuestionStatus, updatedOptAnswer = '') => {
-  setQuestionStatus(prev =>
-    prev.map((q, index) => {
-      if (index === currIndex) {
-        return {
-          ...q,
-          optAnswer: updatedOptAnswer !== '' ? updatedOptAnswer : q.optAnswer, // update only if provided
-          questionStatus: q.questionStatus===QuestionStatus.ATTEMPTED? QuestionStatus.ATTEMPTED :currQuestionStatus
-        };
-      }
-      return q;
-    })
-  );
-};
-
-const handleIsCurrentQuestion = (currIndex)=>{
     setQuestionStatus(prev =>
-    prev.map((q, index) => {
-      if (index === currIndex) {
-        return {
-          ...q,isCurrent:true
-          
-        };
-      }
-      return  {
-          ...q,isCurrent:false
-          
-        };;
-    })
-  );
+      prev.map((q, index) => {
+        if (index === currIndex) {
+          return {
+            ...q,
+            optAnswer: updatedOptAnswer !== '' ? updatedOptAnswer : q.optAnswer, // update only if provided
+            questionStatus: q.questionStatus === QuestionStatus.ATTEMPTED ? QuestionStatus.ATTEMPTED : currQuestionStatus
+          };
+        }
+        return q;
+      })
+    );
+  };
 
-}
+  const handleIsCurrentQuestion = (currIndex) => {
+    setQuestionStatus(prev =>
+      prev.map((q, index) => {
+        if (index === currIndex) {
+          return {
+            ...q, isCurrent: true
+
+          };
+        }
+        return {
+          ...q, isCurrent: false
+
+        };;
+      })
+    );
+
+  }
 
 
 
   const changeQuestionIndex = (index) => {
-   
-   questionStatus[questionIndex].optAnswer===''?  handleSetQuestionStatus(questionIndex,QuestionStatus.UNATTEMPTED) : handleSetQuestionStatus(questionIndex,QuestionStatus.ATTEMPTED_MARKED)
+
+    questionStatus[questionIndex].optAnswer === '' ? handleSetQuestionStatus(questionIndex, QuestionStatus.UNATTEMPTED) : handleSetQuestionStatus(questionIndex, QuestionStatus.ATTEMPTED_MARKED)
 
     setQuestionIndex(index)
     handleIsCurrentQuestion(index);
@@ -74,59 +76,60 @@ const handleIsCurrentQuestion = (currIndex)=>{
 
   const handlePreviousQuestionBtn = () => {
     if (questionIndex != 0) {
-       questionStatus[questionIndex].optAnswer===''?  handleSetQuestionStatus(questionIndex,QuestionStatus.UNATTEMPTED) : handleSetQuestionStatus(questionIndex,QuestionStatus.ATTEMPTED_MARKED)
+      questionStatus[questionIndex].optAnswer === '' ? handleSetQuestionStatus(questionIndex, QuestionStatus.UNATTEMPTED) : handleSetQuestionStatus(questionIndex, QuestionStatus.ATTEMPTED_MARKED)
 
-     setQuestionIndex(prev=>{
-         
-         handleIsCurrentQuestion(questionIndex-1);
+      setQuestionIndex(prev => {
+
+        handleIsCurrentQuestion(questionIndex - 1);
         return questionIndex - 1
       });
-     
+
     }
-    
+
   }
 
 
 
   const handleNextSaveQuestionBtn = () => {
     if (questionIndex < data.length - 1) {
-      
-      questionStatus[questionIndex].optAnswer===''?  handleSetQuestionStatus(questionIndex,QuestionStatus.UNATTEMPTED) : handleSetQuestionStatus(questionIndex,QuestionStatus.ATTEMPTED)
 
-      setQuestionIndex(prev=>{
-        
-         handleIsCurrentQuestion(questionIndex+1);
+      questionStatus[questionIndex].optAnswer === '' ? handleSetQuestionStatus(questionIndex, QuestionStatus.UNATTEMPTED) : handleSetQuestionStatus(questionIndex, QuestionStatus.ATTEMPTED)
+
+      setQuestionIndex(prev => {
+
+        handleIsCurrentQuestion(questionIndex + 1);
         return questionIndex + 1
       });
 
-      //status of question
-     
-    
     }
-   
+    else if (questionIndex < data.length){
+      questionStatus[questionIndex].optAnswer === '' ? handleSetQuestionStatus(questionIndex, QuestionStatus.UNATTEMPTED) : handleSetQuestionStatus(questionIndex, QuestionStatus.ATTEMPTED)
+
+    }
+
   }
 
-  const handleOptionSelection = (e,currQuestionNo)=>{
-    console.log(currQuestionNo+":"+e.target.value)
-    handleSetQuestionStatus(currQuestionNo-1,QuestionStatus.ATTEMPTED_MARKED,e?.target.value);
-    
+  const handleOptionSelection = (e, currQuestionNo) => {
+    console.log(currQuestionNo + ":" + e.target.value)
+    handleSetQuestionStatus(currQuestionNo - 1, QuestionStatus.ATTEMPTED_MARKED, e?.target.value);
+
   }
 
-  const handleMarkAndReview = ()=>{
-     if (questionIndex < data.length - 1) {
-      
-      questionStatus[questionIndex].optAnswer===QuestionStatus.ATTEMPTED_MARKED?  handleSetQuestionStatus(questionIndex,QuestionStatus.ATTEMPTED_MARKED) : handleSetQuestionStatus(questionIndex,QuestionStatus.MARKED)
+  const handleMarkAndReview = () => {
+    if (questionIndex < data.length - 1) {
 
-      setQuestionIndex(prev=>{
-         
-         handleIsCurrentQuestion(questionIndex+1);
+      questionStatus[questionIndex].optAnswer === QuestionStatus.ATTEMPTED_MARKED ? handleSetQuestionStatus(questionIndex, QuestionStatus.ATTEMPTED_MARKED) : handleSetQuestionStatus(questionIndex, QuestionStatus.MARKED)
+
+      setQuestionIndex(prev => {
+
+        handleIsCurrentQuestion(questionIndex + 1);
         return questionIndex + 1
       });
-
-     
-     
-    
     }
+  }
+
+  const handleSumbitBtn = () => {
+    setModelPopup(true);
   }
 
 
@@ -145,8 +148,8 @@ const handleIsCurrentQuestion = (currIndex)=>{
         <div className="questionans">
           <QuestionAns question={data[questionIndex]} questionNo={questionIndex + 1} questionStatus={questionStatus} handleOptionSelection={handleOptionSelection} />
         </div>
-        <div className="questionno">
-          <QuestionNo changeQuestionIndex={changeQuestionIndex} totalQuestions={questionStatus}  />
+        <div className="questionno mt-5">
+          <QuestionNo changeQuestionIndex={changeQuestionIndex} totalQuestions={questionStatus} handleSubmit={handleSumbitBtn} />
         </div>
 
       </div>
@@ -156,6 +159,66 @@ const handleIsCurrentQuestion = (currIndex)=>{
         <button className='bg-green-400 px-3 py-2 rounded-md cursor-pointer text-white' onClick={handleNextSaveQuestionBtn}>Next/Save</button>
 
       </div>
+      {
+        modelPopup &&
+        <div className='absolute top-0 left-0 w-full h-full overflow-hidden bg-black/85 z-50'>
+          {/* Close Button */}
+          <div
+            className='absolute top-5 right-10 text-2xl cursor-pointer text-red-400 hover:text-red-600'
+            onClick={() => setModelPopup(false)}
+          >
+            ✕
+          </div>
+
+          {/* Modal Content */}
+          <div className='absolute top-1/2 left-1/2 w-2/3 md:w-1/2 lg:w-1/3 h-auto p-6 -translate-x-1/2 -translate-y-1/2 bg-white rounded-3xl shadow-2xl flex flex-col gap-6'>
+
+            {/* Title */}
+            <h2 className="text-2xl font-bold text-center text-gray-800">Question Summary</h2>
+
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-green-100 border border-green-400 rounded-xl p-4 text-center shadow-sm">
+                <p className="text-lg font-semibold text-green-700">Attempted</p>
+                <p className="text-2xl font-bold text-green-900">
+                  {questionStatus.filter(q => q.questionStatus===QuestionStatus.ATTEMPTED).length}
+                </p>
+              </div>
+
+              <div className="bg-yellow-100 border border-yellow-400 rounded-xl p-4 text-center shadow-sm">
+                <p className="text-lg font-semibold text-yellow-700">Unattempted</p>
+                <p className="text-2xl font-bold text-yellow-900">
+                  {questionStatus.filter(q => q.questionStatus===QuestionStatus.UNATTEMPTED ).length}
+                </p>
+              </div>
+
+              <div className="bg-purple-100 border border-purple-400 rounded-xl p-4 text-center shadow-sm">
+                <p className="text-lg font-semibold text-purple-700">Marked for Review</p>
+                <p className="text-2xl font-bold text-purple-900">
+                  {questionStatus.filter(q => q.questionStatus===QuestionStatus.ATTEMPTED_MARKED || q.questionStatus===QuestionStatus.MARKED).length}
+                </p>
+              </div>
+
+              <div className="bg-red-100 border border-red-400 rounded-xl p-4 text-center shadow-sm">
+                <p className="text-lg font-semibold text-red-700">Not Visited</p>
+                <p className="text-2xl font-bold text-red-900">
+                  {questionStatus.filter(q => q.questionStatus===QuestionStatus.NOT_VISITED).length}
+                </p>
+              </div>
+            </div>
+
+            {/* Final Submit Button */}
+            <div className="flex justify-end">
+              <Link to={'/result'}
+                className="px-6 py-2 bg-blue-600 text-white rounded-xl shadow-md hover:bg-blue-700 transition"
+              >
+                Final Submit
+              </Link>
+            </div>
+          </div>
+        </div>
+
+      }
 
 
     </>

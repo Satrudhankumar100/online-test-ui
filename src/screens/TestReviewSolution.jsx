@@ -2,7 +2,7 @@ import React from "react";
 
 const TestReviewSolution = () => {
   return (
-    <div className="w-screen h-screen flex flex-col bg-gray-50">
+    <div className=" flex flex-col bg-gray-50">
       {/* Header */}
       <header className="bg-blue-600 text-white p-4 text-xl font-bold shadow">
         Test Review & Solutions
