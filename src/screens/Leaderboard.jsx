@@ -1,17 +1,25 @@
 // src/screens/Leaderboard.jsx
-import React from "react";
+import React, { useEffect, useState } from "react";
+import TestReviewSolution from "./TestReviewSolution";
 
 const Leaderboard = () => {
-  const stats = {
-    score: 0,
+  
+  const [stats,setStats] = useState({
+    score: 40,
     rank: "455/458",
     percentile: "0.66%",
-    correct: 0,
-    incorrect: 0,
-    unattempted: 50,
+    correct: 20,
+    incorrect: 30,
+    unattempted: 10,
     accuracy: "0.00%",
     time: "0:58:08",
-  };
+  })
+
+  const [currTab,setCurrTab] = useState(0);
+
+  useEffect(()=>{
+    
+  },[])
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
@@ -32,17 +40,18 @@ const Leaderboard = () => {
 
         {/* Tabs */}
         <div className="flex space-x-6 border-b pb-3 mb-6 text-gray-600 text-sm font-medium">
-          <button className="text-blue-600 border-b-2 border-blue-600 pb-1">
+          <button className={`cursor-pointer ${currTab==0?'text-blue-600 border-b-2 border-blue-600 pb-1':''} `} onClick={()=>setCurrTab(0)}>
             Overview
           </button>
-          <button>All</button>
-          <button>Correct</button>
-          <button>Incorrect</button>
-          <button>Unattempted</button>
-          <button>Marked For Review</button>
+          <button className={`cursor-pointer ${currTab==1?'text-blue-600 border-b-2 border-blue-600 pb-1':''} `} onClick={()=>setCurrTab(1)}>All</button>
+          <button className={`cursor-pointer ${currTab==2?'text-blue-600 border-b-2 border-blue-600 pb-1':''} `} onClick={()=>setCurrTab(2)}>Correct</button>
+          <button className={`cursor-pointer ${currTab==3?'text-blue-600 border-b-2 border-blue-600 pb-1':''} `} onClick={()=>setCurrTab(3)}>Incorrect</button>
+          <button className={`cursor-pointer ${currTab==4?'text-blue-600 border-b-2 border-blue-600 pb-1':''} `} onClick={()=>setCurrTab(4)}>Unattempted</button>
+          
         </div>
+        {currTab==0 && <div>
 
-        {/* Stats */}
+             {/* Stats */}
         <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
           <div className="bg-white p-4 rounded-xl shadow text-center">
             <p className="text-lg font-semibold text-orange-500">🏆</p>
@@ -86,12 +95,12 @@ const Leaderboard = () => {
           <h3 className="font-semibold text-gray-700 mb-4">Question Stats</h3>
           <div className="flex items-end justify-center space-x-12 h-48">
             <div className="flex flex-col items-center">
-              <div className="bg-green-400 w-12 h-0 rounded"></div>
+              <div className="bg-green-400 w-12 h-0 rounded" style={{ height: `${stats.correct}px` }}></div>
               <p className="text-sm mt-2">Correct</p>
             </div>
             <div className="flex flex-col items-center">
-              <div className="bg-red-400 w-12 h-0 rounded"></div>
-              <p className="text-sm mt-2">Incorrect</p>
+              <div className="bg-red-400 w-12 h-0 rounded" style={{ height: `${stats.incorrect}px` }}></div>
+              <p className="text-sm mt-2"  >Incorrect</p>
             </div>
             <div className="flex flex-col items-center">
               <div
@@ -137,6 +146,16 @@ const Leaderboard = () => {
             </table>
           </div>
         </section>
+          
+        </div>}
+
+        {
+          currTab==1 &&
+          <div>
+              <TestReviewSolution />
+          </div>
+        }
+       
       </main>
     </div>
   );

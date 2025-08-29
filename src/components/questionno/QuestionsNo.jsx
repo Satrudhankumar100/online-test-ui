@@ -3,7 +3,7 @@ import "./QuestionsNo.css";
 import QuestionStatus from "../../constants/QuestionStatus";
 
 
-const QuestionsNo = ({changeQuestionIndex ,totalQuestions}) => {
+const QuestionsNo = ({changeQuestionIndex ,totalQuestions,handleSubmit}) => {
   
 
   // Example status for demo purposes
@@ -50,7 +50,7 @@ const QuestionsNo = ({changeQuestionIndex ,totalQuestions}) => {
       {/* Bottom Buttons */}
       <div className="bottom-buttons">
        
-        <button className="submit-test">Submit Test</button>
+        <button className="submit-test" onClick={handleSubmit}>Submit Test</button>
       </div>
     </div>
   );
