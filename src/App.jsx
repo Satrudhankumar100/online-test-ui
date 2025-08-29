@@ -7,6 +7,8 @@ import Home from "./screens/Home";
 import Test from "./screens/Test";
 import Leaderboard from "./screens/Leaderboard";
 import TestReviewSolution from "./screens/TestReviewSolution";
+import SignUp from "./screens/SignUp";
+import Login from "./screens/Login";
 
 function App() {
   
@@ -22,6 +24,8 @@ function App() {
        <Route path={"/result"} element={<Leaderboard/>}></Route>
       
        <Route path={"/review"} element={<TestReviewSolution/>}></Route>
+       <Route path={"/signup"} element={<SignUp/>}></Route>
+       <Route path={"/login"} element={<Login/>}></Route>
       
       
        <Route path={"/*"} element={<PageNotFound/>}></Route>
