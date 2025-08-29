@@ -1,58 +1,94 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const TestReviewSolution = () => {
+  const [questions, setQuestions] = useState([]);
+
+  useEffect(() => {
+    // ✅ Fetch from localStorage
+    const storedData = JSON.parse(localStorage.getItem("reviewData")) || [];
+
+    // ✅ Convert optionA..E into an array
+    const normalizedData = storedData.map((q, index) => ({
+      questionNo: index + 1,
+      questionTxt: q.questionTxt,
+      options: [
+        { key: "A", text: q.optionA },
+        { key: "B", text: q.optionB },
+        { key: "C", text: q.optionC },
+        { key: "D", text: q.optionD },
+        { key: "E", text: q.optionE },
+      ].filter((opt) => opt.text && opt.text.trim() !== ""), // remove empty ones
+      correctOption: q.correctOption,
+      userAnswer: q.userAnswer, // ✅ store user’s answer
+      explanation: q.explanation,
+    }));
+
+    setQuestions(normalizedData);
+  }, []);
+
   return (
-    <div className=" flex flex-col bg-gray-50">
+    <div className="flex flex-col bg-gray-50 min-h-screen">
       {/* Header */}
       <header className="bg-blue-600 text-white p-4 text-xl font-bold shadow">
         Test Review & Solutions
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto p-6">
-        {/* Question Card */}
-        <div className="bg-white p-6 rounded-2xl shadow mb-6 w-full">
-          <h2 className="text-lg font-semibold mb-4">
-            Question 1: The octal number (651.124)₈ is equivalent to?
-          </h2>
+      <main className="flex-1 overflow-y-auto p-6 space-y-6">
+        {questions.length === 0 ? (
+          <p className="text-gray-500 text-center">No review data found.</p>
+        ) : (
+          questions.map((q) => (
+            <div
+              key={q.questionNo}
+              className="bg-white p-6 rounded-2xl shadow border border-gray-200"
+            >
+              {/* Question */}
+              <h2 className="text-lg font-semibold mb-4">
+                Question {q.questionNo}: {q.questionTxt}
+              </h2>
 
-          {/* Options */}
-          <ul className="space-y-3">
-            <li className="p-3 rounded-lg border hover:bg-gray-100 cursor-pointer">
-              A) (421.52)₁₀
-            </li>
-            <li className="p-3 rounded-lg border bg-green-100">
-              B) (425.17)₁₀ ✅ (Correct Answer)
-            </li>
-            <li className="p-3 rounded-lg border hover:bg-gray-100 cursor-pointer">
-              C) (419.62)₁₀
-            </li>
-            <li className="p-3 rounded-lg border bg-red-100">
-              D) (429.15)₁₀ ❌ (Your Answer)
-            </li>
-          </ul>
+              {/* Options */}
+              <ul className="space-y-3 mb-4">
+                {q.options.map((opt) => {
+                  let optionClass = "p-3 rounded-md border";
+                  let mark = "";
 
-          {/* Solution */}
-          <div className="mt-6 bg-blue-50 p-4 rounded-lg border border-blue-200">
-            <h3 className="font-semibold text-blue-700 mb-2">Solution:</h3>
-            <p className="text-gray-700">
-              Convert octal (651.124)₈ → decimal step by step using positional
-              values of 8.  
-              Correct conversion gives (425.17)₁₀.
-            </p>
-          </div>
-        </div>
+                  if (q.correctOption === opt.key) {
+                    optionClass += " bg-green-100 border-green-400 font-medium";
+                    mark = " ✅ (Correct Answer)";
+                  } else if (q.userAnswer === opt.key) {
+                    optionClass += " bg-red-100 border-red-400 font-medium";
+                    mark = " ❌ (Your Answer)";
+                  } else {
+                    optionClass += " bg-gray-50 border-gray-200";
+                  }
+
+                  return (
+                    <li key={opt.key} className={optionClass}>
+                      {opt.key}) {opt.text} {mark}
+                    </li>
+                  );
+                })}
+              </ul>
+
+              {/* Solution / Explanation */}
+              <div className="bg-blue-50 border border-blue-200 p-3 rounded-md">
+                <p className="text-blue-700 font-semibold">Solution:</p>
+                <p className="text-gray-700">{q.explanation}</p>
+              </div>
+            </div>
+          ))
+        )}
       </main>
 
-      {/* Footer Navigation */}
-      <footer className="bg-white shadow p-4 flex justify-between">
-        <button className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
-          Previous
-        </button>
-        <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+      {/* Navigation Buttons */}
+      <div className="flex justify-between p-4">
+        <button className="px-4 py-2 bg-gray-200 rounded-lg">Previous</button>
+        <button className="px-4 py-2 bg-blue-600 text-white rounded-lg">
           Next
         </button>
-      </footer>
+      </div>
     </div>
   );
 };
