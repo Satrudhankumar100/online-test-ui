@@ -1,5 +1,6 @@
 import React from 'react'
 import "./Instruction.css"
+import { Link } from 'react-router-dom';
 const Instruction = () => {
 
 
@@ -42,7 +43,10 @@ const Instruction = () => {
                     </div>
                 </div>
 
-                <button>Agree and Continue</button>
+                <div className='flex justify-center'>
+
+                    <Link to="/start-test" className='bg-blue-400 px-4 py-2 text-white rounded-xl'>Agree and Continue</Link>
+                </div>
 
             </div>
         </>
