@@ -95,6 +95,9 @@ const Test = () => {
 
       questionStatus[questionIndex].optAnswer === '' ? handleSetQuestionStatus(questionIndex, QuestionStatus.UNATTEMPTED) : handleSetQuestionStatus(questionIndex, QuestionStatus.ATTEMPTED)
 
+      //saving question status into localstorage
+      localStorage.setItem("reviewData",JSON.stringify(questionStatus));
+
       setQuestionIndex(prev => {
 
         handleIsCurrentQuestion(questionIndex + 1);
@@ -105,6 +108,8 @@ const Test = () => {
     else if (questionIndex < data.length){
       questionStatus[questionIndex].optAnswer === '' ? handleSetQuestionStatus(questionIndex, QuestionStatus.UNATTEMPTED) : handleSetQuestionStatus(questionIndex, QuestionStatus.ATTEMPTED)
 
+      // save last question
+      localStorage.setItem("reviewData",JSON.stringify(questionStatus));
     }
 
   }
