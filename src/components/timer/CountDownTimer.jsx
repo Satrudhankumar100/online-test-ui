@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 const CountdownTimer = ({ initialMinutes = 60 }) => {
   const [timeLeft, setTimeLeft] = useState(initialMinutes * 60); // seconds
   const [isPaused, setIsPaused] = useState(false);
-
+ 
   useEffect(() => {
     if (timeLeft <= 0 || isPaused) return;
 
+    //track current date time minus test started
+    //console.log(new Date().toLocaleTimeString())
     const timerId = setInterval(() => {
       setTimeLeft((prev) => prev - 1);
     }, 1000);
