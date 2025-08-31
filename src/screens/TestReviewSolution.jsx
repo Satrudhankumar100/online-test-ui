@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-const TestReviewSolution = () => {
+const TestReviewSolution = ({storedData}) => {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
     // ✅ Fetch from localStorage
-    const storedData = JSON.parse(localStorage.getItem("reviewData")) || [];
+    
 
     // ✅ Convert optionA..E into an array
     const normalizedData = storedData.map((q, index) => ({
