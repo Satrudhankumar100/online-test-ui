@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "./components/header/Header"
 import { Route, Routes } from "react-router-dom";
 import TestSeries from "./components/testseries/TestSeries";
 import PageNotFound from "./components/pagenotfound/PageNotFound";
@@ -9,9 +8,12 @@ import Leaderboard from "./screens/Leaderboard";
 import TestReviewSolution from "./screens/TestReviewSolution";
 import SignUp from "./screens/SignUp";
 import Login from "./screens/Login";
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import Instruction from "./screens/Instruction";
 
 function App() {
-  
+  const auth = useAuthUser()
+ 
 
   return (
     <>
@@ -19,6 +21,7 @@ function App() {
     <Routes>
       
        <Route path={"/"} element={<Home/>}></Route>
+       <Route path={"/instruction"} element={<Instruction/>}></Route>
        <Route path={"/testseries"} element={<TestSeries/>}></Route>
        <Route path={"/start-test"} element={<Test/>}></Route>
        <Route path={"/result"} element={<Leaderboard/>}></Route>
