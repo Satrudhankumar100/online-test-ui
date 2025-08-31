@@ -17,19 +17,21 @@ const Leaderboard = () => {
     unattempted: 10,
     accuracy: "0.00%",
     time: "0:58:08",
+    total:50,
+    solution:[]
   })
 
-    const authHeader = useAuthHeader()
+  const authHeader = useAuthHeader()
 
   const [currTab, setCurrTab] = useState(0);
 
   const handleResult = async () => {
     try {
-        console.log(authHeader());
-       const storedData = JSON.parse(localStorage.getItem(LocalStorageKeys.QUESTION_STATUS)) || [];
-    const currQuestioinData = storedData?.map(prev => ({ questionId: prev.questionId, selectedOptions: prev.optAnswer }));
-    const TestSeriesId = localStorage.getItem(LocalStorageKeys.TEST_SERIES_ID);
-     const resp= await axios.post(`${Baseurl}/result/${TestSeriesId}`, currQuestioinData, {
+      console.log(authHeader());
+      const storedData = JSON.parse(localStorage.getItem(LocalStorageKeys.QUESTION_STATUS)) || [];
+      const currQuestioinData = storedData?.map(prev => ({ questionId: prev.questionId, selectedOptions: prev.optAnswer }));
+      const TestSeriesId = localStorage.getItem(LocalStorageKeys.TEST_SERIES_ID);
+      const resp = await axios.post(`${Baseurl}/result/${TestSeriesId}`, currQuestioinData, {
         headers: {
           "Content-Type": "application/json",
           "Authorization": authHeader()
@@ -37,6 +39,7 @@ const Leaderboard = () => {
       })
 
       console.log(resp.data);
+      setStats(resp.data);
 
     } catch (err) {
       console.log(err);
@@ -44,12 +47,7 @@ const Leaderboard = () => {
   }
 
   useEffect(() => {
-
-   
-handleResult();
-
-
-    console.log("herer")
+    handleResult();
 
   }, [])
 
@@ -88,7 +86,7 @@ handleResult();
             <div className="bg-white p-4 rounded-xl shadow text-center">
               <p className="text-lg font-semibold text-orange-500">🏆</p>
               <p className="mt-2 text-sm text-gray-600">Your Score</p>
-              <p className="text-xl font-bold">{stats.score}/50</p>
+              <p className="text-xl font-bold">{stats.score}/{stats.total}</p>
             </div>
             <div className="bg-white p-4 rounded-xl shadow text-center">
               <p className="text-lg font-semibold text-purple-500">🎯</p>
@@ -184,7 +182,7 @@ handleResult();
         {
           currTab == 1 &&
           <div>
-            <TestReviewSolution />
+            <TestReviewSolution storedData={stats?.solution} />
           </div>
         }
 
