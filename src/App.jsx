@@ -10,6 +10,11 @@ import SignUp from "./screens/SignUp";
 import Login from "./screens/Login";
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import Instruction from "./screens/Instruction";
+import TestSeriesForm from "./screens/TestSeriesForm.jsx";
+import AddQuestion from "./screens/AddQuestions.jsx";
+import BulkQuestionUpload from "./screens/BulkQuestionUpload.jsx";
+
+
 
 function App() {
   const auth = useAuthUser()
@@ -29,6 +34,9 @@ function App() {
        <Route path={"/review"} element={<TestReviewSolution/>}></Route>
        <Route path={"/signup"} element={<SignUp/>}></Route>
        <Route path={"/login"} element={<Login/>}></Route>
+       <Route path={"/test-form"} element={<TestSeriesForm/>}></Route>
+       <Route path={"/save-questions"} element={<AddQuestion/>}></Route>
+       <Route path={"/save-bulk-questions"} element={<BulkQuestionUpload/>}></Route>
       
       
        <Route path={"/*"} element={<PageNotFound/>}></Route>
