@@ -10,6 +10,7 @@ import SignUp from "./screens/SignUp";
 import Login from "./screens/Login";
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import Instruction from "./screens/Instruction";
+import TestSeriesForm from "./screens/TestSeriesForm.jsx";
 
 function App() {
   const auth = useAuthUser()
@@ -29,6 +30,7 @@ function App() {
        <Route path={"/review"} element={<TestReviewSolution/>}></Route>
        <Route path={"/signup"} element={<SignUp/>}></Route>
        <Route path={"/login"} element={<Login/>}></Route>
+       <Route path={"/test-form"} element={<TestSeriesForm/>}></Route>
       
       
        <Route path={"/*"} element={<PageNotFound/>}></Route>
