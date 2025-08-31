@@ -11,11 +11,16 @@ import {
   Container
 } from '@mui/material';
 import Header from '../header/Header';
+import { useNavigate } from 'react-router-dom';
+import { LocalStorageKeys } from '../../utils/LocalStorageKeys';
 
 const TestSeries = () => {
   const [series, setSeries] = useState([]);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
+    
     axios
       .get('http://localhost:8080/test/all')
       .then((res) => {
@@ -26,6 +31,11 @@ const TestSeries = () => {
         console.log('Error fetching data: ', error);
       });
   }, []);
+
+  const handleTestSeriesStart=(id)=>{
+      navigate('/instruction');
+      localStorage.setItem(LocalStorageKeys.TEST_SERIES_ID,id)
+  }
 
   return (
     <>
@@ -52,7 +62,7 @@ const TestSeries = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth variant="contained" color="primary">
+                  <Button fullWidth variant="contained" color="primary" onClick={()=>handleTestSeriesStart(item.testSeriesId)}>
                     View Details
                   </Button>
                 </CardActions>

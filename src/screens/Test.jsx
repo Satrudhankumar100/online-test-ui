@@ -3,31 +3,56 @@ import CountdownTimer from '../components/timer/CountDownTimer'
 import './Test.css';
 import QuestionAns from '../components/questionans/QuestionAns'
 import QuestionNo from '../components/questionno/QuestionsNo'
-import { data } from '../screens/data.js';
+
 import { useLocalStorage } from '../hooks/useLocalStorage.js';
 import QuestionStatus from '../constants/QuestionStatus.js';
 import { Link } from 'react-router-dom';
+import { LocalStorageKeys } from '../utils/LocalStorageKeys.js';
+import axios from 'axios';
+import { Baseurl } from '../utils/BaseUrl.js';
 
 const Test = () => {
 
 
-  let question = data.length;
+  const [data, setData] = useState([]);
   const [modelPopup, setModelPopup] = useState(false);
 
   const [questionIndex, setQuestionIndex] = useState(0);
 
   const [questionStatus, setQuestionStatus] = useLocalStorage(
-    "questionStatus",
+    LocalStorageKeys.QUESTION_STATUS,
     Array.from({ length: data.length }, (v, i) => ({
       questionNo: i + 1,
       optAnswer: "",
       questionStatus: QuestionStatus.NOT_VISITED,
-      isCurrent: i === 0
+      isCurrent: i === 0,
+      questionId: i
     }))
   );
 
+  const handleIncomingQuestion = async () => {
+    try {
+      const testSeriesId = localStorage.getItem(LocalStorageKeys.TEST_SERIES_ID);
+      const resp = await axios.get(`${Baseurl}/question/find-all/${testSeriesId}`);
+      console.log(resp.data?.data);
+      setData(resp.data?.data);
+      setQuestionStatus(resp.data?.data.map((v, i) => ({
+        questionNo: i + 1,
+        optAnswer: "",
+        questionStatus: QuestionStatus.NOT_VISITED,
+        isCurrent: i === 0,
+        questionId: v?.questionId
+      })))
+      handleIsCurrentQuestion(questionIndex);
+    } catch (err) {
+      console.log(err)
+    }
+  }
   useEffect(() => {
-    handleIsCurrentQuestion(questionIndex);
+
+    handleIncomingQuestion()
+
+
   }, [])
 
 
@@ -96,7 +121,7 @@ const Test = () => {
       questionStatus[questionIndex].optAnswer === '' ? handleSetQuestionStatus(questionIndex, QuestionStatus.UNATTEMPTED) : handleSetQuestionStatus(questionIndex, QuestionStatus.ATTEMPTED)
 
       //saving question status into localstorage
-      localStorage.setItem("reviewData",JSON.stringify(questionStatus));
+      localStorage.setItem("reviewData", JSON.stringify(questionStatus));
 
       setQuestionIndex(prev => {
 
@@ -105,11 +130,11 @@ const Test = () => {
       });
 
     }
-    else if (questionIndex < data.length){
+    else if (questionIndex < data.length) {
       questionStatus[questionIndex].optAnswer === '' ? handleSetQuestionStatus(questionIndex, QuestionStatus.UNATTEMPTED) : handleSetQuestionStatus(questionIndex, QuestionStatus.ATTEMPTED)
 
       // save last question
-      localStorage.setItem("reviewData",JSON.stringify(questionStatus));
+      localStorage.setItem("reviewData", JSON.stringify(questionStatus));
     }
 
   }
@@ -186,28 +211,28 @@ const Test = () => {
               <div className="bg-green-100 border border-green-400 rounded-xl p-4 text-center shadow-sm">
                 <p className="text-lg font-semibold text-green-700">Attempted</p>
                 <p className="text-2xl font-bold text-green-900">
-                  {questionStatus.filter(q => q.questionStatus===QuestionStatus.ATTEMPTED).length}
+                  {questionStatus.filter(q => q.questionStatus === QuestionStatus.ATTEMPTED).length}
                 </p>
               </div>
 
               <div className="bg-yellow-100 border border-yellow-400 rounded-xl p-4 text-center shadow-sm">
                 <p className="text-lg font-semibold text-yellow-700">Unattempted</p>
                 <p className="text-2xl font-bold text-yellow-900">
-                  {questionStatus.filter(q => q.questionStatus===QuestionStatus.UNATTEMPTED ).length}
+                  {questionStatus.filter(q => q.questionStatus === QuestionStatus.UNATTEMPTED).length}
                 </p>
               </div>
 
               <div className="bg-purple-100 border border-purple-400 rounded-xl p-4 text-center shadow-sm">
                 <p className="text-lg font-semibold text-purple-700">Marked for Review</p>
                 <p className="text-2xl font-bold text-purple-900">
-                  {questionStatus.filter(q => q.questionStatus===QuestionStatus.ATTEMPTED_MARKED || q.questionStatus===QuestionStatus.MARKED).length}
+                  {questionStatus.filter(q => q.questionStatus === QuestionStatus.ATTEMPTED_MARKED || q.questionStatus === QuestionStatus.MARKED).length}
                 </p>
               </div>
 
               <div className="bg-red-100 border border-red-400 rounded-xl p-4 text-center shadow-sm">
                 <p className="text-lg font-semibold text-red-700">Not Visited</p>
                 <p className="text-2xl font-bold text-red-900">
-                  {questionStatus.filter(q => q.questionStatus===QuestionStatus.NOT_VISITED).length}
+                  {questionStatus.filter(q => q.questionStatus === QuestionStatus.NOT_VISITED).length}
                 </p>
               </div>
             </div>
