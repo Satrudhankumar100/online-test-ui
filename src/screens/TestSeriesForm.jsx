@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "../components/header/Header";
+import { Baseurl } from "../utils/BaseUrl";
 
 export default function TestSeriesForm() {
   const [formData, setFormData] = useState({
@@ -20,8 +21,14 @@ export default function TestSeriesForm() {
   // ✅ Fetch categories
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/categories")
-      .then((res) => setCategories(res.data))
+      .get(`${Baseurl}/test/series/categories`)
+    
+      .then((res) =>{
+        console.log(res.data.data);
+        setCategories(res.data.data)
+ 
+      }) 
+      
       .catch((err) => console.error(err));
   }, []);
 
@@ -37,16 +44,13 @@ export default function TestSeriesForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const payload = {
-      ...formData,
-      create_at: new Date().toISOString().split("T")[0],
-    };
+    
 
     setResponse(null);
     setError(null);
 
     axios
-      .post("http://localhost:8080/api/test-series", payload)
+      .post(`${Baseurl}/test/series/test-saved`, formData)
       .then((res) => {
         setResponse(res.data);
         setFormData({
