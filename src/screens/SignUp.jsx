@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { FiMail, FiPhone, FiLock } from "react-icons/fi";
 import Header from "../components/header/Header.jsx";
+import axios from "axios";
+import { Baseurl } from "../utils/BaseUrl.js";
 
 const SignUp = () => {
   const [form, setForm] = useState({
@@ -14,12 +16,19 @@ const SignUp = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (form.password !== form.confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
+   const resp= await axios.post(`${Baseurl}/auth/register`,form,{
+       headers: {
+          "Content-Type": "application/json"
+        }
+    })
+    console.log(resp.data)
+    
     console.log("Form Submitted:", form);
     alert("Registered Successfully!");
   };

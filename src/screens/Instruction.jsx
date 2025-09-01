@@ -1,16 +1,20 @@
 import React, { useEffect } from 'react'
 import "./Instruction.css"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 const Instruction = () => {
 
-     const authHeader = useAuthHeader()
+       const isAuthenticated = useIsAuthenticated()
+        const navigate = useNavigate();
 
     const handleClose=()=>{
         alert("Are sure you want to close test");
     };
     useEffect(()=>{
-         console.log(authHeader)
+         if(!isAuthenticated()){
+             navigate("/login")
+        }
     },[])
     return (
         <>

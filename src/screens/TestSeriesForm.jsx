@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "../components/header/Header";
 import { Baseurl } from "../utils/BaseUrl";
+import { Link, useNavigate } from "react-router-dom";
+import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
 
 export default function TestSeriesForm() {
   const [formData, setFormData] = useState({
@@ -11,6 +13,9 @@ export default function TestSeriesForm() {
     price: "",
     title: "",
   });
+  const isAuthenticated = useIsAuthenticated()
+  const navigate = useNavigate();
+
 
   const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState("");
@@ -20,16 +25,23 @@ export default function TestSeriesForm() {
 
   // ✅ Fetch categories
   useEffect(() => {
-    axios
-      .get(`${Baseurl}/test/series/categories`)
-    
-      .then((res) =>{
-        console.log(res.data.data);
-        setCategories(res.data.data)
- 
-      }) 
-      
-      .catch((err) => console.error(err));
+
+    if (!isAuthenticated()) {
+      navigate("/login")
+
+    } else {
+      axios
+        .get(`${Baseurl}/test/series/categories`)
+
+        .then((res) => {
+          console.log(res.data.data);
+          setCategories(res.data.data)
+
+        })
+
+        .catch((err) => console.error(err));
+    }
+
   }, []);
 
   const handleChange = (e) => {
@@ -44,7 +56,7 @@ export default function TestSeriesForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
 
     setResponse(null);
     setError(null);
@@ -61,6 +73,7 @@ export default function TestSeriesForm() {
           title: "",
         });
         setSearch("");
+
       })
       .catch(() => setError("Failed to save Test Series. Try again."));
   };
@@ -191,6 +204,7 @@ export default function TestSeriesForm() {
               Save Test Series
             </button>
           </form>
+          <Link to={'/save-bulk-questions'} className="text-sm my-5 text-blue-400">Upload Question</Link>
 
           {/* ✅ Response / Error */}
           {response && (

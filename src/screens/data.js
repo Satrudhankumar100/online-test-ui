@@ -7,7 +7,7 @@ export const data=[
     "optionD": "all of the mentioned",
     "optionE": "",
     "correctOption": "D",
-    "marks": 0,
+    "marks": 1,
     "explanation": "The operating system acts as an interface between hardware and application programs, manages hardware resources, and provides services."
   },
   {
@@ -18,7 +18,7 @@ export const data=[
     "optionD": "none of the mentioned",
     "optionE": "",
     "correctOption": "C",
-    "marks": 0,
+    "marks": 1,
     "explanation": "The command interpreter reads and executes the next user-specified command."
   },
   {
@@ -29,7 +29,7 @@ export const data=[
     "optionD": "All of the mentioned",
     "optionE": "",
     "correctOption": "D",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Priority, Round Robin, and Shortest Job First are all CPU scheduling algorithms."
   },
   {
@@ -40,7 +40,7 @@ export const data=[
     "optionD": "API",
     "optionE": "",
     "correctOption": "B",
-    "marks": 0,
+    "marks": 1,
     "explanation": "System calls provide the interface between the application and the operating system services."
   },
   {
@@ -51,7 +51,7 @@ export const data=[
     "optionD": "none of the mentioned",
     "optionE": "",
     "correctOption": "A",
-    "marks": 0,
+    "marks": 1,
     "explanation": "CPU scheduling is the basis of multiprogramming operating systems."
   },
   {
@@ -62,7 +62,7 @@ export const data=[
     "optionD": "kernel is the program that constitutes the central core of the operating system",
     "optionE": "",
     "correctOption": "B",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Modern kernels can load modules dynamically; the statement that they cannot is incorrect."
   },
   {
@@ -73,7 +73,7 @@ export const data=[
     "optionD": "all of the mentioned",
     "optionE": "",
     "correctOption": "D",
-    "marks": 0,
+    "marks": 1,
     "explanation": "The OS handles hardware and software errors like paper shortage, network failure, and power failure."
   },
   {
@@ -84,7 +84,7 @@ export const data=[
     "optionD": "none of the mentioned",
     "optionE": "",
     "correctOption": "A",
-    "marks": 0,
+    "marks": 1,
     "explanation": "OS may be loaded into low or high memory depending on interrupt vector location."
   },
   {
@@ -95,7 +95,7 @@ export const data=[
     "optionD": "none of the mentioned",
     "optionE": "",
     "correctOption": "C",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Error logs are usually written into a log file for debugging and auditing."
   },
   {
@@ -107,7 +107,7 @@ export const data=[
     "optionD": "hybrid kernel",
     "optionE": "",
     "correctOption": "D",
-    "marks": 0,
+    "marks": 1,
     "explanation": "OS X uses a hybrid kernel combining monolithic and microkernel designs."
   },
   {
@@ -119,7 +119,7 @@ export const data=[
     "optionD": "all of the mentioned",
     "optionE": "",
     "correctOption": "D",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Each process has its own address space, global variables, files, alarms, and signal handlers."
   },
   {
@@ -131,7 +131,7 @@ export const data=[
     "optionD": "Blocked state",
     "optionE": "",
     "correctOption": "C",
-    "marks": 0,
+    "marks": 1,
     "explanation": "After time slot completion, the process moves to the Ready state."
   },
   {
@@ -143,7 +143,7 @@ export const data=[
     "optionD": "None of the mentioned",
     "optionE": "",
     "correctOption": "A",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Cascading termination happens normally or abnormally when a parent process terminates."
   },
   {
@@ -155,7 +155,7 @@ export const data=[
     "optionD": "",
     "optionE": "",
     "correctOption": "D",
-    "marks": 0,
+    "marks": 1,
     "explanation": "After I/O completion, a blocked process goes to the Ready state."
   },
   {
@@ -167,7 +167,7 @@ export const data=[
     "optionD": "is not easily accessible",
     "optionE": "",
     "correctOption": "C",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Transient code is loaded into memory only when needed."
   },
   {
@@ -179,7 +179,7 @@ export const data=[
     "optionD": "all of the mentioned",
     "optionE": "",
     "correctOption": "C",
-    "marks": 0,
+    "marks": 1,
     "explanation": "The dispatcher assigns ready processes to the CPU."
   },
   {
@@ -191,7 +191,7 @@ export const data=[
     "optionD": "multiprogramming systems",
     "optionE": "",
     "correctOption": "C",
-    "marks": 0,
+    "marks": 1,
     "explanation": "FCFS causes long waiting times in time-sharing systems."
   },
   {
@@ -203,7 +203,7 @@ export const data=[
     "optionD": "none of the mentioned",
     "optionE": "",
     "correctOption": "C",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Deadlock checks should be done whenever a resource request is made."
   },
   {
@@ -215,7 +215,7 @@ export const data=[
     "optionD": "resource allocation state",
     "optionE": "",
     "correctOption": "D",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Deadlock avoidance checks the resource allocation state to prevent circular waits."
   },
   {
@@ -227,7 +227,7 @@ export const data=[
     "optionD": "must",
     "optionE": "",
     "correctOption": "A",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Swapping must never be done when a process has pending I/O to prevent data inconsistency."
   },
   {
@@ -239,7 +239,7 @@ export const data=[
     "optionD": "all of the mentioned",
     "optionE": "",
     "correctOption": "D",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Main memory stores CPU, OS, and user processes."
   },
   {
@@ -251,7 +251,7 @@ export const data=[
     "optionD": "all of the mentioned",
     "optionE": "",
     "correctOption": "D",
-    "marks": 0,
+    "marks": 1,
     "explanation": "The OS handles disk initialization, bad-block recovery, and booting."
   },
   {
@@ -263,7 +263,7 @@ export const data=[
     "optionD": "decreases ",
     "optionE": "",
     "correctOption": "B",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Transient code changes the OS size during execution."
   },
   {
@@ -275,7 +275,7 @@ export const data=[
     "optionD": "frame",
     "optionE": "",
     "correctOption": "D",
-    "marks": 0,
+    "marks": 1,
     "explanation": "The frame table tracks allocated, free, and available memory frames."
   },
   {
@@ -287,7 +287,7 @@ export const data=[
     "optionD": "special support from both hardware and operating system is essential",
     "optionE": "",
     "correctOption": "C",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Dynamic loading can be implemented by user programs without OS or hardware support."
   },
   {
@@ -299,7 +299,7 @@ export const data=[
     "optionD": "Buses",
     "optionE": "",
     "correctOption": "A",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Device drivers provide a uniform device access interface to the OS."
   },
   {
@@ -311,7 +311,7 @@ export const data=[
     "optionD": "a task must be serviced by its deadline period",
     "optionE": "",
     "correctOption": "D",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Real-time OS must complete tasks within deadline periods."
   },
   {
@@ -323,7 +323,7 @@ export const data=[
     "optionD": "none of the mentioned",
     "optionE": "",
     "correctOption": "C",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Hard real-time OS have less jitter than soft real-time OS."
   },
   {
@@ -335,7 +335,7 @@ export const data=[
     "optionD": "dependent on the scheduling",
     "optionE": "",
     "correctOption": "B",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Interrupt latency in RTOS should be minimal."
   },
   {
@@ -347,7 +347,7 @@ export const data=[
     "optionD": "All of the mentioned",
     "optionE": "",
     "correctOption": "D",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Windows CE, RTLinux, and VxWorks are real-time operating systems."
   },
   {
@@ -359,7 +359,7 @@ export const data=[
     "optionD": "none of the mentioned",
     "optionE": "",
     "correctOption": "C",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Static priority processes maintain their priority."
   },
   {
@@ -371,7 +371,7 @@ export const data=[
     "optionD": "",
     "optionE": "",
     "correctOption": "A",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Host-based IDS analyzes logs to detect intrusions."
   },
   {
@@ -383,7 +383,7 @@ export const data=[
     "optionD": "The host operating system logs in the audit information",
     "optionE": "",
     "correctOption": "C",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Stack-based IDS works closely with TCP/IP stack and inspects packets."
   },
   {
@@ -395,7 +395,7 @@ export const data=[
     "optionD": "the memory overflows",
     "optionE": "",
     "correctOption": "A",
-    "marks": 0,
+    "marks": 1,
     "explanation": "If working set exceeds available frames, OS suspends a process."
   },
   {
@@ -407,7 +407,7 @@ export const data=[
     "optionD": "none of the mentioned",
     "optionE": "",
     "correctOption": "B",
-    "marks": 0,
+    "marks": 1,
     "explanation": "File info is kept in a separate directory structure."
   },
   {
@@ -419,7 +419,7 @@ export const data=[
     "optionD": "system table",
     "optionE": "",
     "correctOption": "C",
-    "marks": 0,
+    "marks": 1,
     "explanation": "OS maintains an open-file table for all open files."
   },
   {
@@ -431,7 +431,7 @@ export const data=[
     "optionD": "None of the mentioned",
     "optionE": "",
     "correctOption": "A",
-    "marks": 0,
+    "marks": 1,
     "explanation": "In a single-level directory, all files are in the same directory."
   },
   {
@@ -443,7 +443,7 @@ export const data=[
     "optionD": "state",
     "optionE": "",
     "correctOption": "D",
-    "marks": 0,
+    "marks": 1,
     "explanation": "State information helps recover from network failures."
   },
   {
@@ -455,7 +455,7 @@ export const data=[
     "optionD": "bootstrap",
     "optionE": "",
     "correctOption": "C",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Boot loader selects and loads the OS."
   },
   {
@@ -467,7 +467,7 @@ export const data=[
     "optionD": "all of the mentioned",
     "optionE": "",
     "correctOption": "A",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Processes use system calls to request I/O operations from OS."
   },
   {
@@ -479,7 +479,7 @@ export const data=[
     "optionD": "partitioning & logical formatting",
     "optionE": "",
     "correctOption": "D",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Partitioning and logical formatting prepare a disk for use."
   },
   {
@@ -491,7 +491,7 @@ export const data=[
     "optionD": "rom",
     "optionE": "",
     "correctOption": "A",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Bootstrap initializes hardware and loads the OS."
   },
   {
@@ -503,7 +503,7 @@ export const data=[
     "optionD": "bad blocks, partitioning",
     "optionE": "",
     "correctOption": "B",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Bad blocks list is maintained and low-level formatting allocates spare sectors."
   },
   {
@@ -515,7 +515,7 @@ export const data=[
     "optionD": "none of the mentioned",
     "optionE": "",
     "correctOption": "A",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Principle of least privilege gives minimum required access."
   },
   {
@@ -527,7 +527,7 @@ export const data=[
     "optionD": "none of the mentioned",
     "optionE": "",
     "correctOption": "B",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Network OS runs on the server."
   },
   {
@@ -539,7 +539,7 @@ export const data=[
     "optionD": "All of the mentioned",
     "optionE": "",
     "correctOption": "D",
-    "marks": 0,
+    "marks": 1,
     "explanation": "Distributed OS types include Network OS and others."
   },
   {
@@ -551,7 +551,7 @@ export const data=[
     "optionD": " none of the mentioned",
     "optionE": "",
     "correctOption": "B",
-    "marks": 0,
+    "marks": 1,
     "explanation": "In Unix, fork() creates a new process."
   }
 ]

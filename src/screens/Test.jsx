@@ -6,10 +6,11 @@ import QuestionNo from '../components/questionno/QuestionsNo'
 
 import { useLocalStorage } from '../hooks/useLocalStorage.js';
 import QuestionStatus from '../constants/QuestionStatus.js';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { LocalStorageKeys } from '../utils/LocalStorageKeys.js';
 import axios from 'axios';
 import { Baseurl } from '../utils/BaseUrl.js';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 
 const Test = () => {
 
@@ -18,6 +19,8 @@ const Test = () => {
   const [modelPopup, setModelPopup] = useState(false);
 
   const [questionIndex, setQuestionIndex] = useState(0);
+  const isAuthenticated = useIsAuthenticated()
+  const navigate = useNavigate();
 
   const [questionStatus, setQuestionStatus] = useLocalStorage(
     LocalStorageKeys.QUESTION_STATUS,
@@ -50,6 +53,10 @@ const Test = () => {
   }
   useEffect(() => {
 
+    if (!isAuthenticated()) {
+      navigate("/login")
+
+    }
     handleIncomingQuestion()
 
 

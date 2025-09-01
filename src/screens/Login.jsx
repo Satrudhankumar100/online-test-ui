@@ -41,7 +41,7 @@ const Login = () => {
             }
         })){
             // Redirect or do-something
-            navigate("/home")
+            navigate("/testseries")
             
         }else {
             //Throw error
@@ -59,7 +59,7 @@ const Login = () => {
     if(isAuthenticated()){
         // Redirect to Dashboard
        
-        navigate("/home")
+        navigate("/testseries")
     }
     
   },[])
