@@ -17,8 +17,14 @@ const Leaderboard = () => {
     unattempted: 10,
     accuracy: "0.00%",
     time: "0:58:08",
-    total:50,
-    solution:[]
+    total: 50,
+    solution: [],
+
+  })
+  const [solutionType, setSolutionType] = useState({
+    correct: [],
+    incorrect: [],
+    unattempted: [],
   })
 
   const authHeader = useAuthHeader()
@@ -40,6 +46,13 @@ const Leaderboard = () => {
 
       console.log(resp.data);
       setStats(resp.data);
+
+      setSolutionType(prev => ({
+        correct: resp.data?.solution?.filter(d => d.choosenOption === d.correctOption),
+        incorrect: resp.data?.solution?.filter(d => d.choosenOption !== d.correctOption && d.choosenOption !== ''),
+        unattempted: resp.data?.solution?.filter(d => d.choosenOption === '')
+      }))
+
 
     } catch (err) {
       console.log(err);
@@ -116,7 +129,7 @@ const Leaderboard = () => {
             <div className="bg-white p-4 rounded-xl shadow text-center">
               <p className="text-lg font-semibold text-blue-600">🎯</p>
               <p className="mt-2 text-sm text-gray-600">Accuracy</p>
-              <p className="text-xl font-bold">{stats.accuracy}</p>
+              <p className="text-xl font-bold"> {Number(stats.accuracy).toFixed(2).toLocaleString()}%</p>
             </div>
           </section>
 
@@ -183,6 +196,27 @@ const Leaderboard = () => {
           currTab == 1 &&
           <div>
             <TestReviewSolution storedData={stats?.solution} />
+          </div>
+        }
+
+        {
+          currTab == 2 &&
+          <div>
+            <TestReviewSolution storedData={solutionType.correct} />
+          </div>
+        }
+
+        {
+          currTab == 3 &&
+          <div>
+            <TestReviewSolution storedData={solutionType.incorrect} />
+          </div>
+        }
+
+        {
+          currTab == 4 &&
+          <div>
+            <TestReviewSolution storedData={solutionType.unattempted} />
           </div>
         }
 

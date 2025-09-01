@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Baseurl } from "../utils/BaseUrl";
 
 export default function BulkQuestionUpload() {
-  const [titles, setTitles] = useState([]);
+  const [titles, setTitles] = useState([{testSeriesId:0,testSeriesTitles:''}]);
   const [selectedSeries, setSelectedSeries] = useState(null);
   const [jsonInput, setJsonInput] = useState("");
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/testseries/titles")
-      .then((res) => setTitles(res.data))
+      .get(`${Baseurl}/test/series/testSeriesTitles`)
+      .then((res) => setTitles(res.data?.data))
       .catch((err) => console.error(err));
   }, []);
 
@@ -18,13 +19,9 @@ export default function BulkQuestionUpload() {
     try {
       let questionsArray = JSON.parse(jsonInput);
 
-      const payload = {
-        testSeriesId: selectedSeries?.testSeriesId,
-        title: selectedSeries?.title,
-        questions: questionsArray,
-      };
+    
 
-      await axios.post("http://localhost:8080/api/questions/save", payload);
+      await axios.post(`${Baseurl}/question/save-all/${selectedSeries?.testSeriesId}`, questionsArray);
       alert("✅ Questions saved successfully!");
       setJsonInput("");
     } catch (error) {
@@ -58,7 +55,7 @@ export default function BulkQuestionUpload() {
             <option value="">-- Select Test Series --</option>
             {titles.map((t) => (
               <option key={t.testSeriesId} value={t.testSeriesId}>
-                {t.title} (ID: {t.testSeriesId})
+                {t.testSeriesTitles} 
               </option>
             ))}
           </select>
