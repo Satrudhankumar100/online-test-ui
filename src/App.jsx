@@ -31,7 +31,7 @@ function App() {
        <Route path={"/start-test"} element={<Test/>}></Route>
        <Route path={"/result"} element={<Leaderboard/>}></Route>
       
-       <Route path={"/review"} element={<TestReviewSolution/>}></Route>
+       
        <Route path={"/signup"} element={<SignUp/>}></Route>
        <Route path={"/login"} element={<Login/>}></Route>
        <Route path={"/test-form"} element={<TestSeriesForm/>}></Route>

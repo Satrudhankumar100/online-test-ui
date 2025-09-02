@@ -5,6 +5,8 @@ import { LocalStorageKeys } from "../utils/LocalStorageKeys";
 import axios from "axios";
 import { Baseurl } from "../utils/BaseUrl";
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
+import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
+import { useNavigate } from "react-router-dom";
 
 const Leaderboard = () => {
 
@@ -28,6 +30,8 @@ const Leaderboard = () => {
   })
 
   const authHeader = useAuthHeader()
+  const isAuthenticated = useIsAuthenticated()
+  const navigate = useNavigate();
 
   const [currTab, setCurrTab] = useState(0);
 
@@ -46,6 +50,7 @@ const Leaderboard = () => {
 
       console.log(resp.data);
       setStats(resp.data);
+      localStorage.removeItem(LocalStorageKeys.QUESTION_STATUS);
 
       setSolutionType(prev => ({
         correct: resp.data?.solution?.filter(d => d.choosenOption === d.correctOption),
@@ -60,7 +65,13 @@ const Leaderboard = () => {
   }
 
   useEffect(() => {
-    handleResult();
+    if (!isAuthenticated()) {
+      navigate("/login")
+
+    } else {
+      handleResult();
+
+    }
 
   }, [])
 
