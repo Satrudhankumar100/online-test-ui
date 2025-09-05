@@ -5,14 +5,16 @@ import { Baseurl } from "../utils/BaseUrl.js";
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import { useNavigate } from "react-router-dom";
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
+import { RingLoader } from "react-spinners";
 
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
-    const isAuthenticated = useIsAuthenticated()
+  const isAuthenticated = useIsAuthenticated()
+  const [loader, setLoader] = useState(false);
 
-    
+
   const navigate = useNavigate();
-   const signIn = useSignIn();
+  const signIn = useSignIn();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -21,6 +23,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoader(true);
     if (form.email == '' || form.password == '') { alert("please fill all the fields"); return; }
     try {
       const resp = await axios.post(`${Baseurl}/auth/login`, form, {
@@ -29,45 +32,58 @@ const Login = () => {
         }
       });
       console.log(resp.data);
-      if(signIn({
-            auth: {
-                token: resp.data,
-                type: 'Bearer'
-            },
-           
-            userState: {
-                name: 'React User',
-                uid: 123456
-            }
-        })){
-            // Redirect or do-something
-            navigate("/testseries")
-            
-        }else {
-            //Throw error
+      setLoader(false);
+      if (signIn({
+        auth: {
+          token: resp.data,
+          type: 'Bearer'
+        },
+
+        userState: {
+          name: 'React User',
+          uid: 123456
         }
+      })) {
+        // Redirect or do-something
+        navigate("/testseries")
+
+      } else {
+        //Throw error
+      }
 
       console.log(resp.data);
     } catch (err) {
+      setLoader(false);
       alert("Invalid User Id and password");
     }
 
 
   };
 
-  useEffect(()=>{
-    if(isAuthenticated()){
-        // Redirect to Dashboard
-       
-        navigate("/testseries")
+  useEffect(() => {
+    if (isAuthenticated()) {
+      // Redirect to Dashboard
+
+      navigate("/testseries")
     }
-    
-  },[])
+
+  }, [])
 
   return (
 
 
     <>
+     {loader && <>
+          <div className='fixed top-0 left-0 flex w-full min-h-screen justify-center items-center bg-white z-50'>
+              <div className='flex justify-center flex-col items-center gap-4 text-blue-500'>
+                <div>
+                <RingLoader size={150} color='#00f' />
+                </div>
+                <div>Loading...</div>
+
+              </div>
+          </div>
+      </>}
       <Header />
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 px-4">
         {/* Card */}

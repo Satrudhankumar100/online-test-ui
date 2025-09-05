@@ -11,12 +11,14 @@ import { LocalStorageKeys } from '../utils/LocalStorageKeys.js';
 import axios from 'axios';
 import { Baseurl } from '../utils/BaseUrl.js';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import { RingLoader } from "react-spinners";
 
 const Test = () => {
 
 
   const [data, setData] = useState([]);
   const [modelPopup, setModelPopup] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   const [questionIndex, setQuestionIndex] = useState(0);
   const isAuthenticated = useIsAuthenticated()
@@ -35,6 +37,7 @@ const Test = () => {
 
   const handleIncomingQuestion = async () => {
     try {
+      setLoader(true);
       const testSeriesId = localStorage.getItem(LocalStorageKeys.TEST_SERIES_ID);
       const resp = await axios.get(`${Baseurl}/question/find-all/${testSeriesId}`);
       console.log(resp.data?.data);
@@ -47,8 +50,10 @@ const Test = () => {
         questionId: v?.questionId
       })))
       handleIsCurrentQuestion(questionIndex);
+      setLoader(false);
     } catch (err) {
       console.log(err)
+      setLoader(false);
     }
   }
   useEffect(() => {
@@ -172,6 +177,18 @@ const Test = () => {
 
   return (
     <>
+      {loader && <>
+              <div className='fixed top-0 left-0 flex w-full min-h-screen justify-center items-center bg-white z-50'>
+                <div className='flex justify-center flex-col items-center gap-4 text-blue-500'>
+                  <div>
+                    <RingLoader size={150} color='#00f' />
+                  </div>
+                  <div>Loading...</div>
+      
+                </div>
+              </div>
+            </>}
+
       <div className='nav'>
         <div className="timer">
           <CountdownTimer />

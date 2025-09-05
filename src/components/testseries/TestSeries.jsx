@@ -10,25 +10,30 @@ import {
   Grid,
   Container
 } from '@mui/material';
+import { RingLoader } from "react-spinners";
 import Header from '../header/Header';
 import { useNavigate } from 'react-router-dom';
 import { LocalStorageKeys } from '../../utils/LocalStorageKeys';
+import { Baseurl } from '../../utils/BaseUrl';
 
 const TestSeries = () => {
   const [series, setSeries] = useState([]);
+  const [loader,setLoader] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    
+    setLoader(true);
     axios
-      .get('http://localhost:8080/test/all')
+      .get(`${Baseurl}/test/all`)
       .then((res) => {
         setSeries(res.data.data);
         console.log(res.data.data);
+        setLoader(false);
       })
       .catch((error) => {
         console.log('Error fetching data: ', error);
+        setLoader(false);
       });
   }, []);
 
@@ -39,7 +44,21 @@ const TestSeries = () => {
 
   return (
     <>
-      <Header />
+     {loader && <>
+          <div className='fixed top-0 left-0 flex w-full min-h-screen justify-center items-center'>
+              <div className='flex justify-center flex-col items-center gap-4 text-blue-500'>
+                <div>
+                <RingLoader size={150} color='#00f' />
+                </div>
+                <div>Loading...</div>
+
+              </div>
+          </div>
+      </>}
+      { !loader &&
+         <>
+        <Header />
+
       <Container sx={{ mt: 4 }}>
         <Grid container spacing={2}>
           {series.map((item) => (
@@ -71,6 +90,8 @@ const TestSeries = () => {
           ))}
         </Grid>
       </Container>
+    </> 
+    }
     </>
   );
 };

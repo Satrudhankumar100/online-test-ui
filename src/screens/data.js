@@ -146,18 +146,7 @@ export const data=[
     "marks": 1,
     "explanation": "Cascading termination happens normally or abnormally when a parent process terminates."
   },
-  {
   
-    "questionTxt": "When a process is in a “Blocked” state waiting for some I/O service. When the service is completed, it goes to the a) Terminated state d) Ready state",
-    "optionA": "",
-    "optionB": "",
-    "optionC": "",
-    "optionD": "",
-    "optionE": "",
-    "correctOption": "D",
-    "marks": 1,
-    "explanation": "After I/O completion, a blocked process goes to the Ready state."
-  },
   {
   
     "questionTxt": "Transient operating system code is a code that",
