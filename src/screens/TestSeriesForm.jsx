@@ -4,6 +4,7 @@ import Header from "../components/header/Header";
 import { Baseurl } from "../utils/BaseUrl";
 import { Link, useNavigate } from "react-router-dom";
 import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
+import { RingLoader } from "react-spinners";
 
 export default function TestSeriesForm() {
   const [formData, setFormData] = useState({
@@ -15,7 +16,7 @@ export default function TestSeriesForm() {
   });
   const isAuthenticated = useIsAuthenticated()
   const navigate = useNavigate();
-
+  const [loader, setLoader] = useState(false);
 
   const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState("");
@@ -56,7 +57,7 @@ export default function TestSeriesForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    setLoader(true);
 
     setResponse(null);
     setError(null);
@@ -73,9 +74,10 @@ export default function TestSeriesForm() {
           title: "",
         });
         setSearch("");
+        setLoader(false);
 
       })
-      .catch(() => setError("Failed to save Test Series. Try again."));
+      .catch(() =>{ setError("Failed to save Test Series. Try again.");setLoader(false)});
   };
 
   const filteredCategories = categories.filter((cat) =>
@@ -84,6 +86,17 @@ export default function TestSeriesForm() {
 
   return (
     <>
+      {loader && <>
+        <div className='fixed top-0 left-0 flex w-full min-h-screen justify-center items-center bg-white z-50'>
+          <div className='flex justify-center flex-col items-center gap-4 text-blue-500'>
+            <div>
+              <RingLoader size={150} color='#00f' />
+            </div>
+            <div>Loading...</div>
+
+          </div>
+        </div>
+      </>}
       <Header />
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50">
         <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-2xl">

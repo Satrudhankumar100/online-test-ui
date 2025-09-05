@@ -7,6 +7,7 @@ import { Baseurl } from "../utils/BaseUrl";
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
 import { useNavigate } from "react-router-dom";
+import { RingLoader } from "react-spinners";
 
 const Leaderboard = () => {
 
@@ -34,6 +35,7 @@ const Leaderboard = () => {
   const navigate = useNavigate();
 
   const [currTab, setCurrTab] = useState(0);
+  const [loader, setLoader] = useState(false);
 
   const handleResult = async () => {
     try {
@@ -76,6 +78,18 @@ const Leaderboard = () => {
   }, [])
 
   return (
+    <>
+       {loader && <>
+                <div className='fixed top-0 left-0 flex w-full min-h-screen justify-center items-center bg-white z-50'>
+                    <div className='flex justify-center flex-col items-center gap-4 text-blue-500'>
+                      <div>
+                      <RingLoader size={150} color='#00f' />
+                      </div>
+                      <div>Loading...</div>
+      
+                    </div>
+                </div>
+            </>}
     <div className="min-h-screen bg-gray-100 flex flex-col">
       {/* Header */}
       <header className="bg-blue-600 text-white py-4 shadow-md">
@@ -233,6 +247,7 @@ const Leaderboard = () => {
 
       </main>
     </div>
+          </>
   );
 };
 

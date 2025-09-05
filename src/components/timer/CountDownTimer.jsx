@@ -23,7 +23,7 @@ const CountdownTimer = ({ initialMinutes = 60 }) => {
       setTimeLeft(remaining);
 
       if (remaining <= 0) {
-        clearInterval(timerId);
+       // clearInterval(timerId);
         // ✅ Auto submit / redirect when time finishes
         // window.location.href = "/result";  // or navigate("/result")
       }

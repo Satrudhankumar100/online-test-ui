@@ -4,13 +4,15 @@ import { Baseurl } from "../utils/BaseUrl";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/header/Header";
 import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
+import { RingLoader } from "react-spinners";
 
 export default function BulkQuestionUpload() {
   const [titles, setTitles] = useState([{ testSeriesId: 0, testSeriesTitles: '' }]);
   const [selectedSeries, setSelectedSeries] = useState(null);
   const [jsonInput, setJsonInput] = useState("");
-   const isAuthenticated = useIsAuthenticated()
-    const navigate = useNavigate();
+  const isAuthenticated = useIsAuthenticated()
+  const navigate = useNavigate();
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated()) {
@@ -28,21 +30,32 @@ export default function BulkQuestionUpload() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoader(true);
       let questionsArray = JSON.parse(jsonInput);
-
-
-
       await axios.post(`${Baseurl}/question/save-all/${selectedSeries?.testSeriesId}`, questionsArray);
       alert("✅ Questions saved successfully!");
       setJsonInput("");
+      setLoader(false);
     } catch (error) {
       console.error(error);
       alert("❌ Invalid JSON or error saving questions!");
+      setLoader(false);
     }
   };
 
   return (
     <>
+      {loader && <>
+        <div className='fixed top-0 left-0 flex w-full min-h-screen justify-center items-center bg-white z-50'>
+          <div className='flex justify-center flex-col items-center gap-4 text-blue-500'>
+            <div>
+              <RingLoader size={150} color='#00f' />
+            </div>
+            <div>Loading...</div>
+
+          </div>
+        </div>
+      </>}
       <Header />
       <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
         <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-3xl">
