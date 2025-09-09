@@ -13,6 +13,7 @@ import Instruction from "./screens/Instruction";
 import TestSeriesForm from "./screens/TestSeriesForm.jsx";
 import AddQuestion from "./screens/AddQuestions.jsx";
 import BulkQuestionUpload from "./screens/BulkQuestionUpload.jsx";
+import AuthHeader from "./components/header/AuthHeader.jsx";
 
 
 
@@ -23,25 +24,27 @@ function App() {
   return (
     <>
     
-    <Routes>
-      
-       <Route path={"/"} element={<Home/>}></Route>
-       <Route path={"/instruction"} element={<Instruction/>}></Route>
-       <Route path={"/testseries"} element={<TestSeries/>}></Route>
-       <Route path={"/start-test"} element={<Test/>}></Route>
-       <Route path={"/result"} element={<Leaderboard/>}></Route>
-      
-       
-       <Route path={"/signup"} element={<SignUp/>}></Route>
-       <Route path={"/login"} element={<Login/>}></Route>
-       <Route path={"/test-form"} element={<TestSeriesForm/>}></Route>
-       <Route path={"/save-questions"} element={<AddQuestion/>}></Route>
-       <Route path={"/save-bulk-questions"} element={<BulkQuestionUpload/>}></Route>
-      
-      
-       <Route path={"/*"} element={<PageNotFound/>}></Route>
-      
-    </Routes>
+<Routes>
+  <Route path="/" element={<Home />} />
+  <Route path="/instruction" element={<Instruction />} />
+  <Route path="/testseries" element={<TestSeries />} />
+  <Route path="/start-test" element={<Test />} />
+  <Route path="/result" element={<Leaderboard />} />
+
+  <Route path="/signup" element={<SignUp />} />
+  <Route path="/login" element={<Login />} />
+  <Route path="/test-form" element={<TestSeriesForm />} />
+  <Route path="/save-questions" element={<AddQuestion />} />
+
+  {/* ✅ Layout route */}
+  <Route path="/auth" element={<AuthHeader />}>
+    {/* ✅ child route — no leading slash */}
+    <Route path="save-bulk-questions" element={<BulkQuestionUpload />} />
+  </Route>
+
+  <Route path="*" element={<PageNotFound />} />
+</Routes>
+
     
     </>
   )
