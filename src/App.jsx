@@ -14,6 +14,7 @@ import TestSeriesForm from "./screens/TestSeriesForm.jsx";
 import AddQuestion from "./screens/AddQuestions.jsx";
 import BulkQuestionUpload from "./screens/BulkQuestionUpload.jsx";
 import AuthHeader from "./components/header/AuthHeader.jsx";
+import Playlist from "./components/playlist/Playlist.jsx";
 
 
 
@@ -35,6 +36,7 @@ function App() {
   <Route path="/login" element={<Login />} />
   <Route path="/test-form" element={<TestSeriesForm />} />
   <Route path="/save-questions" element={<AddQuestion />} />
+  <Route path="/create-playlist" element={<Playlist />} />
 
   {/* ✅ Layout route */}
   <Route path="/auth" element={<AuthHeader />}>
