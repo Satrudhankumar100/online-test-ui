@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-export default function Playlist() {
+export default function CreatePlaylist() {
   const [open, setOpen] = useState(false);
   const [plans, setPlans] = useState([]);
   const [formData, setFormData] = useState({
@@ -41,7 +41,7 @@ export default function Playlist() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">
+    <>
       {/* Button to open modal */}
       <button
         onClick={() => setOpen(true)}
@@ -70,7 +70,7 @@ export default function Playlist() {
             </button>
 
             <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-               Create a New Playlist
+              Create a New Playlist
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-5">
@@ -154,6 +154,7 @@ export default function Playlist() {
           </div>
         </div>
       )}
-    </div>
+    
+  </>
   );
 }

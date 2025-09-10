@@ -5,7 +5,6 @@ import PageNotFound from "./components/pagenotfound/PageNotFound";
 import Home from "./screens/Home";
 import Test from "./screens/Test";
 import Leaderboard from "./screens/Leaderboard";
-import TestReviewSolution from "./screens/TestReviewSolution";
 import SignUp from "./screens/SignUp";
 import Login from "./screens/Login";
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
@@ -14,7 +13,8 @@ import TestSeriesForm from "./screens/TestSeriesForm.jsx";
 import AddQuestion from "./screens/AddQuestions.jsx";
 import BulkQuestionUpload from "./screens/BulkQuestionUpload.jsx";
 import AuthHeader from "./components/header/AuthHeader.jsx";
-import Playlist from "./components/playlist/Playlist.jsx";
+import Playlist from "./components/playlist/CreatePlaylist.jsx";
+import Test_Playlist from "./screens/auth/common/Test_Playlist.jsx";
 
 
 
@@ -42,6 +42,7 @@ function App() {
   <Route path="/auth" element={<AuthHeader />}>
     {/* ✅ child route — no leading slash */}
     <Route path="save-bulk-questions" element={<BulkQuestionUpload />} />
+    <Route path="test_playlist" element={<Test_Playlist/>} />
   </Route>
 
   <Route path="*" element={<PageNotFound />} />
