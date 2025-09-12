@@ -13,10 +13,14 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import { MdDashboardCustomize, MdOutlinePlaylistAdd } from "react-icons/md";
+import { FaUserEdit, FaPenSquare, FaUserLock } from "react-icons/fa";
+
 
 // ✅ React Icons
 import { FaBars, FaChevronLeft, FaChevronRight, FaInbox, FaRegEnvelope } from "react-icons/fa";
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
+import { InstitueNavData } from '../../utils/AuthNavData';
 
 const drawerWidth = 240;
 
@@ -129,7 +133,7 @@ export default function AuthHeader() {
                         <FaBars />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
-                        Mini variant drawer
+                        Test Series Hub
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -141,54 +145,31 @@ export default function AuthHeader() {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-                            <ListItemButton
-                                sx={[
-                                    { minHeight: 48, px: 2.5 },
-                                    open ? { justifyContent: 'initial' } : { justifyContent: 'center' },
-                                ]}
-                            >
-                                <ListItemIcon
+                    {InstitueNavData?.map((nav, index) => (
+                        <Link to={nav.path} key={index}>
+
+                            <ListItem  disablePadding sx={{ display: 'block' }}>
+                                <ListItemButton
                                     sx={[
-                                        { minWidth: 0, justifyContent: 'center' },
-                                        open ? { mr: 3 } : { mr: 'auto' },
+                                        { minHeight: 48, px: 2.5 },
+                                        open ? { justifyContent: 'initial' } : { justifyContent: 'center' },
                                     ]}
                                 >
-                                    {index % 2 === 0 ? <FaInbox /> : <FaRegEnvelope />}
-                                </ListItemIcon>
-                                <ListItemText
-                                    primary={text}
-                                    sx={[open ? { opacity: 1 } : { opacity: 0 }]}
-                                />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </List>
-                <Divider />
-                <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-                            <ListItemButton
-                                sx={[
-                                    { minHeight: 48, px: 2.5 },
-                                    open ? { justifyContent: 'initial' } : { justifyContent: 'center' },
-                                ]}
-                            >
-                                <ListItemIcon
-                                    sx={[
-                                        { minWidth: 0, justifyContent: 'center' },
-                                        open ? { mr: 3 } : { mr: 'auto' },
-                                    ]}
-                                >
-                                    {index % 2 === 0 ? <FaInbox /> : <FaRegEnvelope />}
-                                </ListItemIcon>
-                                <ListItemText
-                                    primary={text}
-                                    sx={[open ? { opacity: 1 } : { opacity: 0 }]}
-                                />
-                            </ListItemButton>
-                        </ListItem>
+                                    <ListItemIcon
+                                        sx={[
+                                            { minWidth: 0, justifyContent: 'center' },
+                                            open ? { mr: 3 } : { mr: 'auto' },
+                                        ]}
+                                    >
+                                        {<nav.icon />}
+                                    </ListItemIcon>
+                                    <ListItemText
+                                        primary={nav.title}
+                                        sx={[open ? { opacity: 1 } : { opacity: 0 }]}
+                                    />
+                                </ListItemButton>
+                            </ListItem>
+                        </Link>
                     ))}
                 </List>
             </Drawer>

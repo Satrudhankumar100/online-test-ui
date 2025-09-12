@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-export default function CustomTable({columns,rows}) {
+export default function QuestionsCustomTable({columns,rows}) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const navigate = useNavigate();
@@ -66,7 +66,7 @@ export default function CustomTable({columns,rows}) {
                         <div className='flex gap-2 justify-end'>
                             
                          <button className='px-3 py-2 bg-blue-300 rounded-md cursor-pointer'>Edit</button>
-                         <button className='px-3 py-2 bg-green-300 rounded-md cursor-pointer' onClick={()=>handleNavigate(row?.testSeriesId)}>Show Test Series</button>
+                         <button className='px-3 py-2 bg-green-300 rounded-md cursor-pointer' onClick={()=>handleNavigate(row?.testSeriesId)}>Show Questions</button>
                          <button className='px-3 py-2 bg-red-300 rounded-md cursor-pointer'>Deative</button>
                         </div>
                     </TableCell>
