@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CustomTable from '../../../components/custom/CustomTable'
 import CreatePlaylist from '../../../components/playlist/CreatePlaylist'
+import axios from 'axios';
+import { Baseurl } from '../../../utils/BaseUrl';
+import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 
 
 const columns = [
@@ -36,18 +39,32 @@ const columns = [
   }
 ];
 
-function createData(testSeriesId,playlistId,title,description, noOfTestSeries, price, exprieDate,visiblity) {
 
-  return {testSeriesId,playlistId, title, description,noOfTestSeries, price, exprieDate,visiblity };
-}
 
-const rows = [
-  createData(1,1,'BPSC TRE 4.0','nothing but a problems', '50', 50, '30 days','public'),
 
-];
 
 
 const Test_Playlist = () => {
+
+     const authHeader = useAuthHeader()
+     const [rows,setRows] = useState([])
+
+  const FetchPlaylist = async ()=>{
+  try{
+
+     const resp = await axios.get(`${Baseurl}/playlists`, { headers: { "Content-Type": "application/json","Authorization": authHeader() }})
+        console.log(resp.data);
+        setRows(resp.data?.data)
+
+  }catch(err){
+    console.log(err)
+  }
+}
+
+useEffect(()=>{
+    FetchPlaylist();
+},[])
+
   return (
     <>
         <div className='my-5'>

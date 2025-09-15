@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { Baseurl } from "../../utils/BaseUrl";
+import axios from "axios";
+import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 
 export default function CreatePlaylist() {
   const [open, setOpen] = useState(false);
   const [plans, setPlans] = useState([]);
+   const authHeader = useAuthHeader()
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     visibility: "PUBLIC",
     plan_id: "",
+    price: "",
   });
 
   useEffect(() => {
@@ -23,21 +28,15 @@ export default function CreatePlaylist() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
-    fetch("http://localhost:8080/api/playlists", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then(() => {
-        alert("Playlist created successfully!");
-        setFormData({ title: "", description: "", visibility: "PUBLIC", plan_id: "" });
-        setOpen(false);
-      })
-      .catch((err) => console.error("Error:", err));
+    try{
+
+        const resp = await axios.post(`${Baseurl}/save-playlist`,formData, { headers: { "Content-Type": "application/json","Authorization": authHeader() }})
+        console.log(resp.data);
+
+      }catch(err){console.log(err)}
   };
 
   return (
@@ -52,7 +51,7 @@ export default function CreatePlaylist() {
 
       {/* Modal */}
       {open && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
+        <div className="fixed inset-0 flex items-center justify-center z-[9999]">
           {/* Overlay */}
           <div
             className="absolute inset-0 bg-black opacity-50"
@@ -135,12 +134,29 @@ export default function CreatePlaylist() {
                   required
                 >
                   <option value="">-- Choose Plan --</option>
-                  {plans.map((plan) => (
-                    <option key={plan.plan_id} value={plan.plan_id}>
-                      {plan.duration_day} Days
-                    </option>
-                  ))}
+                  <option value={15}>15</option>
+                  <option value={30}>30</option>
+                  <option value={60}>60</option>
+                  <option value={90}>90</option>
+                  <option value={180}>180</option>
+                  <option value={365}>365</option>
+
                 </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Price
+                </label>
+                <input
+                  type="text"
+                  name="price"
+                  value={formData.price}
+                  onChange={handleChange}
+                  placeholder="Enter Price of Playlist"
+                  className="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 outline-none"
+                  required
+                />
               </div>
 
               {/* Submit */}
@@ -154,7 +170,7 @@ export default function CreatePlaylist() {
           </div>
         </div>
       )}
-    
-  </>
+
+    </>
   );
 }

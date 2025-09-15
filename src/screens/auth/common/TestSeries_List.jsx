@@ -1,5 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import TestSeriesCustomTable from '../../../components/custom/TestSeriesCustomTable'
+import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
+import axios from 'axios';
+import { Baseurl } from '../../../utils/BaseUrl';
+import { useParams } from 'react-router-dom';
+import TestSeriesForm from '../../../components/playlist/TestSeriesForm';
+import BulkQuestionUpload from '../../../components/playlist/BulkQuestionUpload';
 
 
 
@@ -12,9 +18,9 @@ const columns = [
     minWidth: 170,
     format: (value) => value.toFixed(2),
   },
-  { id: 'noOfQuestions', label: 'No of Questions', minWidth: 60, align:'center' },
+  { id: 'totalQuestion', label: 'No of Questions', minWidth: 60, align:'center' },
   {
-    id: 'marks',
+    id: 'totalMarks',
     label: 'Total Marks',
     minWidth: 60,
     align: 'center',
@@ -36,18 +42,30 @@ const columns = [
   }
 ];
 
-function createData(testSeriesId,playlistId,title,description, noOfQuestions, marks, duration,visiblity) {
 
-  return {testSeriesId,playlistId, title, description,noOfQuestions, marks, duration,visiblity };
-}
-
-const rows = [
-  createData(1,1,'BPSC TRE 4.0','nothing but a problems', '50', 50, '60 Min','public'),
-
-];
 
 
 const TestSeries_List = () => {
+
+     const { id } = useParams();  
+     const authHeader = useAuthHeader()
+     const [rows,setRows] = useState([])
+
+  const FetchPlaylist = async ()=>{
+  try{
+
+     const resp = await axios.get(`${Baseurl}/test/all/${id}`, { headers: { "Content-Type": "application/json","Authorization": authHeader() }})
+        console.log(resp.data);
+        setRows(resp.data?.data)
+
+  }catch(err){
+    console.log(err)
+  }
+}
+
+useEffect(()=>{
+    FetchPlaylist();
+},[])
 
 
   return (
@@ -58,8 +76,9 @@ const TestSeries_List = () => {
         
                     </div>
                     <div>
-                        <div className='flex justify-end'>
-                            
+                        <div className='flex justify-end gap-4'>
+                            <TestSeriesForm />
+                            <BulkQuestionUpload />
                         </div>
                     </div>
                 </div>
