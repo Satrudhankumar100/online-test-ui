@@ -15,6 +15,9 @@ import BulkQuestionUpload from "./screens/BulkQuestionUpload.jsx";
 import AuthHeader from "./components/header/AuthHeader.jsx";
 import Playlist from "./components/playlist/CreatePlaylist.jsx";
 import Test_Playlist from "./screens/auth/common/Test_Playlist.jsx";
+import TestSeries_List from "./screens/auth/common/TestSeries_List.jsx";
+import Question_List from "./screens/auth/common/Question_List.jsx";
+import Dashboard from "./screens/auth/common/Dashboard.jsx";
 
 
 
@@ -41,8 +44,11 @@ function App() {
   {/* ✅ Layout route */}
   <Route path="/auth" element={<AuthHeader />}>
     {/* ✅ child route — no leading slash */}
+    <Route path="dashboard" element={<Dashboard />} />
     <Route path="save-bulk-questions" element={<BulkQuestionUpload />} />
     <Route path="test_playlist" element={<Test_Playlist/>} />
+    <Route path="list_testseries/:id" element={<TestSeries_List />} />
+    <Route path="list_questions" element={<Question_List />} />
   </Route>
 
   <Route path="*" element={<PageNotFound />} />
