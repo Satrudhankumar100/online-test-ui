@@ -66,7 +66,7 @@ export default function CustomTable({columns,rows}) {
                         <div className='flex gap-2 justify-end'>
                             
                          <button className='px-3 py-2 bg-blue-300 rounded-md cursor-pointer'>Edit</button>
-                         <button className='px-3 py-2 bg-green-300 rounded-md cursor-pointer' onClick={()=>handleNavigate(row?.testSeriesId)}>Show Test Series</button>
+                         <button className='px-3 py-2 bg-green-300 rounded-md cursor-pointer' onClick={()=>handleNavigate(row?.testListId)}>Show Test Series</button>
                          <button className='px-3 py-2 bg-red-300 rounded-md cursor-pointer'>Deative</button>
                         </div>
                     </TableCell>

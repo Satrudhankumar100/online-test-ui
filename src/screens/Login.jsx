@@ -45,7 +45,7 @@ const Login = () => {
         }
       })) {
         // Redirect or do-something
-        navigate("/testseries")
+         navigate("/auth/dashboard")
 
       } else {
         //Throw error
@@ -62,9 +62,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated()) {
-      // Redirect to Dashboard
-
-      navigate("/testseries")
+      navigate("/auth/dashboard")
     }
 
   }, [])

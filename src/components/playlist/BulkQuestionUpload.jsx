@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Baseurl } from "../utils/BaseUrl";
-import { Link, useNavigate } from "react-router-dom";
-import Header from "../components/header/Header";
+import { Baseurl } from "../../utils/BaseUrl";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import Header from "../header/Header";
 import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
 import { RingLoader } from "react-spinners";
+import { MdClose } from "react-icons/md";
 
 export default function BulkQuestionUpload() {
   const [titles, setTitles] = useState([{ testSeriesId: 0, testSeriesTitles: '' }]);
@@ -13,6 +14,8 @@ export default function BulkQuestionUpload() {
   const isAuthenticated = useIsAuthenticated()
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
+  const [isOpen,setIsOpen] = useState(false);
+   const { id } = useParams(); 
 
   useEffect(() => {
     if (!isAuthenticated()) {
@@ -20,7 +23,7 @@ export default function BulkQuestionUpload() {
 
     } else {
       axios
-        .get(`${Baseurl}/test/series/testSeriesTitles`)
+        .get(`${Baseurl}/test/series/testSeriesTitles/${id}`)
         .then((res) => setTitles(res.data?.data))
         .catch((err) => console.error(err));
     }
@@ -56,8 +59,13 @@ export default function BulkQuestionUpload() {
           </div>
         </div>
       </>}
-      <Header />
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+      <div>
+        <button className="px-6 py-2 bg-green-500 font-semibold text-white rounded-2xl text-sm cursor-pointer" onClick={()=>setIsOpen(true)}>+ Upload Questions</button>
+
+      </div>
+      {isOpen &&
+      <div className="min-h-screen bg-gray-100/60 flex items-center justify-center p-6 absolute top-0 left-0 w-full h-screen z-[9999]">
+         <div className="text-3xl top-0 flex w-full justify-end p-4 cursor-pointer text-red-500 fixed"  onClick={()=>setIsOpen(false)}><MdClose /></div>
         <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-3xl">
           <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
             📘 Bulk Question Upload
@@ -123,6 +131,7 @@ export default function BulkQuestionUpload() {
           </div>
         </div>
       </div>
+}
     </>
   );
 }
