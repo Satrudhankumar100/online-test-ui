@@ -1,6 +1,6 @@
 import React from 'react'; // ✅ Import React
 import { MdDashboardCustomize, MdOutlinePlaylistAdd } from 'react-icons/md';
-import { FaUserEdit, FaPenSquare, FaUserLock } from 'react-icons/fa';
+import { FaUserEdit, FaPenSquare, FaUserLock,FaRupeeSign  } from 'react-icons/fa';
 
 const InstitueNavData = [
     {
@@ -29,6 +29,13 @@ const InstitueNavData = [
     },
      {
         id:5,
+        title:'Create Plan',
+        icon:FaRupeeSign,
+        path:'/auth/create-plan' 
+    }
+    ,
+     {
+        id:6,
         title:'Logout',
         icon:FaUserLock,
         path:'/' 
