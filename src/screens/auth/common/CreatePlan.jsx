@@ -11,7 +11,7 @@ const CreatePlan = () => {
   });
 
   const [plans, setPlans] = useState([]);
-  const [animateKey, setAnimateKey] = useState(0); // To trigger animation
+  const [animateKey, setAnimateKey] = useState(0);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,7 +30,7 @@ const CreatePlan = () => {
     };
 
     setPlans([...plans, newPlan]);
-    setAnimateKey(animateKey + 1); // Update key to trigger animation
+    setAnimateKey(animateKey + 1);
 
     setPlanData({
       title: '',
@@ -43,7 +43,6 @@ const CreatePlan = () => {
   };
 
   return (
-    
     <div className="max-w-5xl mx-auto p-6">
       <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
         Create Custom Plan
@@ -116,14 +115,21 @@ const CreatePlan = () => {
 
           <div>
             <label className="block text-gray-700 font-medium">Duration (days)</label>
-            <input
-              type="number"
+            <select
               name="duration_day"
               value={planData.duration_day}
               onChange={handleChange}
               className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
               required
-            />
+            >
+              <option value="">Select Duration</option>
+              {Array.from({ length: 6 }, (_, i) => (i + 1) * 30).map((days) => (
+                <option key={days} value={days}>
+                  {days} days
+                </option>
+              ))}
+              <option value={365}>1 Year (365 days)</option>
+            </select>
           </div>
         </div>
 
@@ -157,7 +163,7 @@ const CreatePlan = () => {
             <tbody>
               {plans.map((plan) => (
                 <tr
-                  key={`${plan.plan_id}-${animateKey}`} 
+                  key={`${plan.plan_id}-${animateKey}`}
                   className="border-t hover:bg-gray-50 transition transform duration-500 ease-out animate-fade-in"
                 >
                   <td className="p-3">{plan.plan_id}</td>
@@ -165,7 +171,7 @@ const CreatePlan = () => {
                   <td className="p-3">{plan.description}</td>
                   <td className="p-3">₹{plan.price}</td>
                   <td className="p-3">{plan.discount || 0}%</td>
-                  <td className="p-3">{plan.duration_day}</td>
+                  <td className="p-3">{plan.duration_day} days</td>
                 </tr>
               ))}
             </tbody>
