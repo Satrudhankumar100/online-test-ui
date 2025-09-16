@@ -19,6 +19,7 @@ import Question_List from "./screens/auth/common/Question_List.jsx";
 import Dashboard from "./screens/auth/common/Dashboard.jsx";
 import BulkQuestionUpload from "./components/playlist/BulkQuestionUpload.jsx";
 import CreatePlan from "./screens/auth/common/CreatePlan.jsx";
+import Plan_List from "./screens/auth/common/Plan_List.jsx";
 
 
 
@@ -41,7 +42,7 @@ function App() {
   <Route path="/test-form" element={<TestSeriesForm />} />
   <Route path="/save-questions" element={<AddQuestion />} />
   <Route path="/create-playlist" element={<Playlist />} />
-  <Route path="create-plan" element={<CreatePlan />} />
+ 
 
 
 
@@ -52,6 +53,7 @@ function App() {
     <Route path="test_playlist" element={<Test_Playlist/>} />
     <Route path="list_testseries/:id" element={<TestSeries_List />} />
     <Route path="list_questions" element={<Question_List />} />
+     <Route path="create-plan" element={<Plan_List />} />
     
   </Route>
 
