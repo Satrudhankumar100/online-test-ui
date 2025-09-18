@@ -12,15 +12,15 @@ import { RingLoader } from "react-spinners";
 const Leaderboard = () => {
 
   const [stats, setStats] = useState({
-    score: 40,
-    rank: "455/458",
-    percentile: "0.66%",
-    correct: 20,
-    incorrect: 30,
-    unattempted: 10,
+    score: 0,
+    rank: "0/0",
+    percentile: "0%",
+    correct: 0,
+    incorrect: 0,
+    unattempted: 0,
     accuracy: "0.00%",
-    time: "0:58:08",
-    total: 50,
+    time: "0:00:00",
+    total: 0,
     solution: [],
 
   })
@@ -39,6 +39,7 @@ const Leaderboard = () => {
 
   const handleResult = async () => {
     try {
+      setLoader(true);
       console.log(authHeader());
       const storedData = JSON.parse(localStorage.getItem(LocalStorageKeys.QUESTION_STATUS)) || [];
       const currQuestioinData = storedData?.map(prev => ({ questionId: prev.questionId, selectedOptions: prev.optAnswer }));
@@ -59,10 +60,11 @@ const Leaderboard = () => {
         incorrect: resp.data?.solution?.filter(d => d.choosenOption !== d.correctOption && d.choosenOption !== ''),
         unattempted: resp.data?.solution?.filter(d => d.choosenOption === '')
       }))
-
+      setLoader(false);
 
     } catch (err) {
       console.log(err);
+      setLoader(false)
     }
   }
 

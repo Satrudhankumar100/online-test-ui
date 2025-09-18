@@ -12,6 +12,7 @@ import axios from 'axios';
 import { Baseurl } from '../utils/BaseUrl.js';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import { RingLoader } from "react-spinners";
+import { MdClose, MdMenu } from 'react-icons/md';
 
 const Test = () => {
 
@@ -19,6 +20,7 @@ const Test = () => {
   const [data, setData] = useState([]);
   const [modelPopup, setModelPopup] = useState(false);
   const [loader, setLoader] = useState(false);
+  const [isOpen,setIsOpen] = useState(true);
 
   const [questionIndex, setQuestionIndex] = useState(0);
   const isAuthenticated = useIsAuthenticated()
@@ -109,6 +111,7 @@ const Test = () => {
 
     setQuestionIndex(index)
     handleIsCurrentQuestion(index);
+    setIsOpen(false);
   }
 
   const handlePreviousQuestionBtn = () => {
@@ -189,7 +192,8 @@ const Test = () => {
               </div>
             </>}
 
-      <div className='nav'>
+      <div className='nav '>
+        <div className='text-black text-3xl flex justify-center items-center visible md:hidden' onClick={()=>setIsOpen(true)}><MdMenu /></div>
         <div className="timer">
           <CountdownTimer />
         </div>
@@ -202,7 +206,8 @@ const Test = () => {
         <div className="questionans">
           <QuestionAns question={data[questionIndex]} questionNo={questionIndex + 1} questionStatus={questionStatus} handleOptionSelection={handleOptionSelection} />
         </div>
-        <div className="questionno mt-5">
+        <div className={`questionno mt-5 bg-white md:bg-transparent absolute md:relative top-0 flex justify-center items-center h-screen md:h-fit transition-all ${isOpen?'left-0':'-left-full'} md:left-0`}>
+           <div className="text-3xl top-0 flex w-full justify-end p-4 cursor-pointer text-red-500 absolute visible md:hidden"  onClick={()=>setIsOpen(false)}><MdClose /></div>
           <QuestionNo changeQuestionIndex={changeQuestionIndex} totalQuestions={questionStatus} handleSubmit={handleSumbitBtn} />
         </div>
 
