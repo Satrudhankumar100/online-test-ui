@@ -3,6 +3,7 @@ import "./Instruction.css"
 import { Link, useNavigate } from 'react-router-dom';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import { LocalStorageKeys } from '../utils/LocalStorageKeys';
 const Instruction = () => {
 
        const isAuthenticated = useIsAuthenticated()
@@ -15,6 +16,7 @@ const Instruction = () => {
          if(!isAuthenticated()){
              navigate("/login")
         }
+        localStorage.removeItem(LocalStorageKeys.ATTEMPT_ID);
     },[])
     return (
         <>

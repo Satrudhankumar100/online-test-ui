@@ -44,7 +44,8 @@ const Leaderboard = () => {
       const storedData = JSON.parse(localStorage.getItem(LocalStorageKeys.QUESTION_STATUS)) || [];
       const currQuestioinData = storedData?.map(prev => ({ questionId: prev.questionId, selectedOptions: prev.optAnswer }));
       const TestSeriesId = localStorage.getItem(LocalStorageKeys.TEST_SERIES_ID);
-      const resp = await axios.post(`${Baseurl}/result/${TestSeriesId}`, currQuestioinData, {
+      const attemptId = localStorage.getItem(LocalStorageKeys.ATTEMPT_ID);
+      const resp = await axios.post(`${Baseurl}/result/${TestSeriesId}/${attemptId}`, currQuestioinData, {
         headers: {
           "Content-Type": "application/json",
           "Authorization": authHeader()

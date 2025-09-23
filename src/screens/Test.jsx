@@ -13,6 +13,7 @@ import { Baseurl } from '../utils/BaseUrl.js';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import { RingLoader } from "react-spinners";
 import { MdClose, MdMenu } from 'react-icons/md';
+import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 
 const Test = () => {
 
@@ -22,7 +23,9 @@ const Test = () => {
   const [loader, setLoader] = useState(false);
   const [isOpen,setIsOpen] = useState(true);
 
+
   const [questionIndex, setQuestionIndex] = useState(0);
+   const authHeader = useAuthHeader()
   const isAuthenticated = useIsAuthenticated()
   const navigate = useNavigate();
 
@@ -41,16 +44,25 @@ const Test = () => {
     try {
       setLoader(true);
       const testSeriesId = localStorage.getItem(LocalStorageKeys.TEST_SERIES_ID);
-      const resp = await axios.get(`${Baseurl}/question/find-all/${testSeriesId}`);
+      let attemptId = localStorage.getItem(LocalStorageKeys.ATTEMPT_ID);
+      console.log(attemptId)
+      attemptId= attemptId??-1;
+      const resp = await axios.get(`${Baseurl}/test/find-all/${testSeriesId}/${attemptId}`,{
+          headers: {
+          "Content-Type": "application/json",
+          "Authorization": authHeader()
+        }
+      });
       console.log(resp.data?.data);
-      setData(resp.data?.data);
-      setQuestionStatus(resp.data?.data.map((v, i) => ({
+      setData(resp.data?.data?.questionOptions);
+      setQuestionStatus(resp.data?.data?.questionOptions.map((v, i) => ({
         questionNo: i + 1,
         optAnswer: "",
         questionStatus: QuestionStatus.NOT_VISITED,
         isCurrent: i === 0,
         questionId: v?.questionId
       })))
+      localStorage.setItem(LocalStorageKeys.ATTEMPT_ID,resp.data?.data?.attemptId);
       handleIsCurrentQuestion(questionIndex);
       setLoader(false);
     } catch (err) {
@@ -177,6 +189,10 @@ const Test = () => {
     setModelPopup(true);
   }
 
+  const handleFinalSubmitBtn = ()=>{
+     navigate("/result", { replace: true });
+  }
+
 
   return (
     <>
@@ -268,11 +284,12 @@ const Test = () => {
 
             {/* Final Submit Button */}
             <div className="flex justify-end">
-              <Link to={'/result'}
-                className="px-6 py-2 bg-blue-600 text-white rounded-xl shadow-md hover:bg-blue-700 transition"
-              >
-                Final Submit
-              </Link>
+              <button
+      onClick={handleFinalSubmitBtn}
+      className="px-6 py-2 bg-blue-600 text-white rounded-xl shadow-md hover:bg-blue-700 transition"
+    >
+      Final Submit
+    </button>
             </div>
           </div>
         </div>

@@ -17,10 +17,10 @@ import Test_Playlist from "./screens/auth/common/Test_Playlist.jsx";
 import TestSeries_List from "./screens/auth/common/TestSeries_List.jsx";
 import Question_List from "./screens/auth/common/Question_List.jsx";
 import Dashboard from "./screens/auth/common/Dashboard.jsx";
-import BulkQuestionUpload from "./components/playlist/BulkQuestionUpload.jsx";
 import CreatePlan from "./screens/auth/common/CreatePlan.jsx";
 import TestSeriesPlans from "./components/testseriesplan/TestSeriesPlans.jsx";
 import Plan_List from "./screens/auth/common/Plan_List.jsx";
+import { Bounce, ToastContainer } from 'react-toastify';
 
 
 
@@ -63,6 +63,19 @@ function App() {
   <Route path="*" element={<PageNotFound />} />
 </Routes>
 
+    <ToastContainer
+position="top-center"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick={true}
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+transition={Bounce}
+/>
     
     </>
   )
