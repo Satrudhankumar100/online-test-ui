@@ -6,6 +6,7 @@ import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import { useNavigate } from "react-router-dom";
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
 import { RingLoader } from "react-spinners";
+import AuthRoles from "../utils/AuthRoles.js";
 
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -32,20 +33,25 @@ const Login = () => {
         }
       });
       console.log(resp.data);
+      
       setLoader(false);
       if (signIn({
         auth: {
-          token: resp.data,
+          token: resp.data?.data.token,
           type: 'Bearer'
         },
 
         userState: {
-          name: 'React User',
-          uid: 123456
+          name:  resp.data?.data.username,
+          roles:  resp.data?.data.userRole,
         }
       })) {
         // Redirect or do-something
-         navigate("/auth/dashboard")
+      let roles = resp.data?.data.userRole;
+      if(roles?.includes(AuthRoles.ADMIN)) navigate("/auth/dashboard")
+      else if(roles?.includes(AuthRoles.TESTSERIESHUB)) navigate("/auth/dashboard")
+      else if(roles?.includes(AuthRoles.INSTITUTE)) navigate("/auth/dashboard")
+      else navigate("/user/dashboard")
 
       } else {
         //Throw error
@@ -63,7 +69,7 @@ const Login = () => {
   useEffect(() => {
     if (isAuthenticated()) {
       navigate("/auth/dashboard")
-    }
+    }else localStorage.clear(); 
 
   }, [])
 

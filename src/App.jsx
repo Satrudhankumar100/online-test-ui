@@ -21,62 +21,72 @@ import CreatePlan from "./screens/auth/common/CreatePlan.jsx";
 import TestSeriesPlans from "./components/testseriesplan/TestSeriesPlans.jsx";
 import Plan_List from "./screens/auth/common/Plan_List.jsx";
 import { Bounce, ToastContainer } from 'react-toastify';
+import AuthUserHeader from "./components/header/AuthUserHeader.jsx";
 
 
 
 
 function App() {
   const auth = useAuthUser()
- 
+
 
   return (
     <>
-    
-<Routes>
-  <Route path="/" element={<Home />} />
-  <Route path="/instruction" element={<Instruction />} />
-  <Route path="/testseries" element={<TestSeries />} />
-  <Route path="/start-test" element={<Test />} />
-  <Route path="/result" element={<Leaderboard />} />
 
-  <Route path="/signup" element={<SignUp />} />
-  <Route path="/login" element={<Login />} />
-  <Route path="/test-form" element={<TestSeriesForm />} />
-  <Route path="/save-questions" element={<AddQuestion />} />
-  <Route path="/create-playlist" element={<Playlist />} />
-  <Route path="/create-plan" element={<CreatePlan />} />
-  <Route path="/plan-type" element={<TestSeriesPlans />} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/instruction" element={<Instruction />} />
+        <Route path="/testseries" element={<TestSeries />} />
+        <Route path="/start-test" element={<Test />} />
+        <Route path="/result" element={<Leaderboard />} />
+
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/test-form" element={<TestSeriesForm />} />
+        <Route path="/save-questions" element={<AddQuestion />} />
+        <Route path="/create-playlist" element={<Playlist />} />
+        <Route path="/create-plan" element={<CreatePlan />} />
+        <Route path="/plan-type" element={<TestSeriesPlans />} />
 
 
 
-  {/* ✅ Layout route */}
-  <Route path="/auth" element={<AuthHeader />}>
-    {/* ✅ child route — no leading slash */}
-    <Route path="dashboard" element={<Dashboard />} />
-    <Route path="test_playlist" element={<Test_Playlist/>} />
-    <Route path="list_testseries/:id" element={<TestSeries_List />} />
-    <Route path="list_questions" element={<Question_List />} />
-     <Route path="create-plan" element={<Plan_List/>} />
-    
-  </Route>
+        {/* ✅ Layout route */}
+        <Route path="/auth" element={<AuthHeader />}>
+          {/* ✅ child route — no leading slash */}
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="test_playlist" element={<Test_Playlist />} />
+          <Route path="list_testseries/:id" element={<TestSeries_List />} />
+          <Route path="list_questions" element={<Question_List />} />
+          <Route path="create-plan" element={<Plan_List />} />
 
-  <Route path="*" element={<PageNotFound />} />
-</Routes>
+        </Route>
+        <Route path="/user" element={<AuthUserHeader />}>
+          {/* ✅ child route — no leading slash */}
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="test_playlist" element={<Test_Playlist />} />
+          <Route path="list_testseries/:id" element={<TestSeries_List />} />
+          <Route path="list_questions" element={<Question_List />} />
+          <Route path="create-plan" element={<Plan_List />} />
 
-    <ToastContainer
-position="top-center"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick={true}
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-theme="light"
-transition={Bounce}
-/>
-    
+        </Route>
+
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={true}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
+
     </>
   )
 }
