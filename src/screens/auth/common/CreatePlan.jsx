@@ -1,8 +1,10 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import { MdClose } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
+import { Baseurl } from '../../../utils/BaseUrl';
 
 const CreatePlan = () => {
 
@@ -18,9 +20,32 @@ const CreatePlan = () => {
       discount_period: '',
       duration_day: '',
     });
+
+    const [planDecriptions,setPlanDescriptions] = useState([]);
+    const [planTitles,setPlanTitles] = useState([]);
   
     const [plans, setPlans] = useState([]);
     const [animateKey, setAnimateKey] = useState(0);
+    
+
+    const FetchPlanDescriptions = async()=>{
+      try{
+
+        const resp=  await axios.get(`${Baseurl}/plan/description`,{
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": authHeader()
+          }
+        })
+        console.log(resp.data)
+        const tempTitles =  resp.data?.data.map(d=>({planDescriptionId:d.planDescriptionId,title:d.title}));
+        console.log(tempTitles);
+        setPlanTitles(tempTitles);
+        setPlanDescriptions(resp.data?.data);
+      }catch(err){
+        console.log(err)
+      }
+    }
   
         // ✅ Fetch categories
         useEffect(() => {
@@ -29,10 +54,12 @@ const CreatePlan = () => {
             navigate("/login")
       
           } else {
-            
+            FetchPlanDescriptions();
           }
       
         }, []);
+
+        console.log("plantitles:"+planTitles);
       
   
   const handleChange = (e) => {
@@ -86,14 +113,18 @@ const CreatePlan = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-gray-700 font-medium">Title</label>
-                    <input
-                      type="text"
-                      name="title"
-                      value={planData.title}
+                    <select name="title"
+                      
                       onChange={handleChange}
                       className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                       required
-                    />
+                    >
+                      {
+                        planTitles.map(planTitle=>{
+                          return <option key={planTitle?.planDescriptionId} value={planTitle?.planDescriptionId}>{planTitle?.title}</option>
+                        })
+                      }
+                    </select>
                   </div>
 
                   <div>

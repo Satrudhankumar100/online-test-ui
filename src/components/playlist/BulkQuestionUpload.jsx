@@ -6,6 +6,7 @@ import Header from "../header/Header";
 import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
 import { RingLoader } from "react-spinners";
 import { MdClose } from "react-icons/md";
+import { toast } from "react-toastify";
 
 export default function BulkQuestionUpload() {
   const [titles, setTitles] = useState([{ testSeriesId: 0, testSeriesTitles: '' }]);
@@ -13,7 +14,7 @@ export default function BulkQuestionUpload() {
   const [jsonInput, setJsonInput] = useState("");
   const isAuthenticated = useIsAuthenticated()
   const navigate = useNavigate();
-  const [loader, setLoader] = useState(false);
+  const [isDisabled,setIsDisabled] = useState(false);
   const [isOpen,setIsOpen] = useState(false);
    const { id } = useParams(); 
 
@@ -33,32 +34,23 @@ export default function BulkQuestionUpload() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoader(true);
+     setIsDisabled(true);
       let questionsArray = JSON.parse(jsonInput);
       await axios.post(`${Baseurl}/question/save-all/${selectedSeries?.testSeriesId}`, questionsArray);
-      alert("✅ Questions saved successfully!");
+      toast.success("✅ Questions saved successfully!");
       setJsonInput("");
-      setLoader(false);
+     
     } catch (error) {
       console.error(error);
-      alert("❌ Invalid JSON or error saving questions!");
-      setLoader(false);
+      toast.error("❌ Invalid JSON or error saving questions!");
+      
     }
+    setIsDisabled(false);
   };
 
   return (
     <>
-      {loader && <>
-        <div className='fixed top-0 left-0 flex w-full min-h-screen justify-center items-center bg-white z-50'>
-          <div className='flex justify-center flex-col items-center gap-4 text-blue-500'>
-            <div>
-              <RingLoader size={150} color='#00f' />
-            </div>
-            <div>Loading...</div>
-
-          </div>
-        </div>
-      </>}
+    
       <div>
         <button className="px-6 py-2 bg-green-500 font-semibold text-white rounded-2xl text-sm cursor-pointer" onClick={()=>setIsOpen(true)}>+ Upload Questions</button>
 
@@ -122,10 +114,10 @@ export default function BulkQuestionUpload() {
               </button>
               <button
                 onClick={handleSubmit}
-                disabled={!selectedSeries}
+                disabled={isDisabled}
                 className="px-5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium disabled:opacity-50"
               >
-                Upload
+                 {isDisabled?'processing...':'Uplaod'}
               </button>
             </div>
           </div>

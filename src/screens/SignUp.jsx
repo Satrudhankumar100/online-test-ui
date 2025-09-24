@@ -4,6 +4,9 @@ import Header from "../components/header/Header.jsx";
 import axios from "axios";
 import { Baseurl } from "../utils/BaseUrl.js";
 import { RingLoader } from "react-spinners";
+import { toast } from "react-toastify";
+import { MdOutlinePersonOutline } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const [form, setForm] = useState({
@@ -11,6 +14,7 @@ const SignUp = () => {
     mobile: "",
     password: "",
     confirmPassword: "",
+    name:""
   });
   const [loader, setLoader] = useState(false);
 
@@ -24,6 +28,7 @@ const SignUp = () => {
 
     if (form.password !== form.confirmPassword) {
       alert("Passwords do not match!");
+      setLoader(false);
       return;
     }
     try {
@@ -37,10 +42,11 @@ const SignUp = () => {
 
       console.log("Form Submitted:", form);
       setLoader(false)
-      alert("Registered Successfully!");
+      toast.success("Register Successful");
+      
     } catch (err) {
       console.log(err)
-      alert("Something Goes wrong!");
+      toast.error("Something Goes wrong!");
         setLoader(false)
     }
   };
@@ -67,6 +73,22 @@ const SignUp = () => {
           </h2>
 
           <form className="space-y-6" onSubmit={handleSubmit}>
+            {/* Name */}
+            <div>
+              <label className="block mb-1 text-gray-700">Name</label>
+              <div className="flex items-center border-b-2 border-gray-300 focus-within:border-indigo-600">
+                <MdOutlinePersonOutline className="text-gray-500 mr-2" />
+                <input
+                  type="text"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                  placeholder="Enter your name"
+                  className="w-full py-2 focus:outline-none"
+                />
+              </div>
+            </div>
             {/* Email */}
             <div>
               <label className="block mb-1 text-gray-700">Email</label>
@@ -146,12 +168,12 @@ const SignUp = () => {
           {/* Already Registered? */}
           <p className="mt-6 text-center text-gray-600">
             Already have an account?{" "}
-            <a
-              href="/login"
+            <Link
+              to="/login"
               className="font-medium text-indigo-600 hover:text-indigo-800"
             >
               Login
-            </a>
+            </Link>
           </p>
         </div>
       </div>

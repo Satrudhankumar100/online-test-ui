@@ -6,6 +6,7 @@ import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
 import { RingLoader } from "react-spinners";
 import { MdClose } from "react-icons/md";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
+import { toast } from "react-toastify";
 
 export default function TestSeriesForm() {
   const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ export default function TestSeriesForm() {
     testListId: "",
     title: "",
   });
+
 
   const isAuthenticated = useIsAuthenticated()
       const authHeader = useAuthHeader()
@@ -31,6 +33,7 @@ export default function TestSeriesForm() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
+   const [isDisabled,setIsDisabled] = useState(false);
 
 
 
@@ -98,8 +101,8 @@ export default function TestSeriesForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-   // setLoader(true);
-
+   
+    setIsDisabled(true);
     setResponse(null);
     setError(null);
     console.log(formData)
@@ -114,14 +117,14 @@ export default function TestSeriesForm() {
           subject:"",
           topic:"",
           duration: "",
-          price: "",
           title: "",
         });
         setSearch("");
-        setLoader(false);
+        toast.success("Test Series Createad");
 
       })
-      .catch(() => { setError("Failed to save Test Series. Try again."); setLoader(false) });
+      .catch(() => { toast.error("Failed to save Test Series. Try again.");  });
+      setIsDisabled(false);
   };
 
    const filteredCategories = categories.filter((cat) =>
@@ -331,31 +334,13 @@ export default function TestSeriesForm() {
               {/* Submit */}
               <button
                 type="submit"
+                disabled={isDisabled}
                 className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-xl font-semibold transition duration-300"
               >
                 Save Test Series
               </button>
             </form>
-            <Link to={'/save-bulk-questions'} className="text-sm my-5 text-blue-400">Upload Question</Link>
-
-            {/* ✅ Response / Error */}
-            {response && (
-              <div className="mt-6 p-4 bg-green-100 border border-green-400 rounded-xl">
-                <h3 className="text-green-800 font-bold mb-2">
-                  ✅ Test Series Saved!
-                </h3>
-                <pre className="text-sm text-gray-700 overflow-x-auto">
-                  {JSON.stringify(response, null, 2)}
-                </pre>
-              </div>
-            )}
-            {error && (
-              <div className="mt-6 p-4 bg-red-100 border border-red-400 rounded-xl">
-                <h3 className="text-red-800 font-bold mb-2">❌ Error</h3>
-                <p className="text-gray-700">{error}</p>
-              </div>
-            )}
-          </div>
+           </div>
         </div>
       </div>
       }

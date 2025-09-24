@@ -2,26 +2,20 @@ import React, { useState, useEffect } from "react";
 import { Baseurl } from "../../utils/BaseUrl";
 import axios from "axios";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
+import { toast } from "react-toastify";
 
 export default function CreatePlaylist() {
   const [open, setOpen] = useState(false);
-  const [plans, setPlans] = useState([]);
+  const [isDisabled,setIsDisabled] = useState(false);
    const authHeader = useAuthHeader()
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     visibility: "PUBLIC",
-    plan_id: "",
-    price: "",
+   
   });
 
-  useEffect(() => {
-    // Fetch plans from backend
-    fetch("http://localhost:8080/api/plans") // Adjust endpoint
-      .then((res) => res.json())
-      .then((data) => setPlans(data))
-      .catch((err) => console.error("Error fetching plans:", err));
-  }, []);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,13 +24,16 @@ export default function CreatePlaylist() {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
+    setIsDisabled(true);
 
     try{
 
         const resp = await axios.post(`${Baseurl}/save-playlist`,formData, { headers: { "Content-Type": "application/json","Authorization": authHeader() }})
         console.log(resp.data);
+        toast.success("playlist is created")
 
-      }catch(err){console.log(err)}
+      }catch(err){console.log(err);toast.error("Something goes wrong");}
+      setIsDisabled(false);
   };
 
   return (
@@ -121,47 +118,14 @@ export default function CreatePlaylist() {
                 </select>
               </div>
 
-              {/* Plan Dropdown */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Select Plan (Days)
-                </label>
-                <select
-                  name="plan_id"
-                  value={formData.plan_id}
-                  onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 outline-none"
-                  required
-                >
-                  <option value="">-- Choose Plan --</option>
-                  <option value={15}>15</option>
-                  <option value={30}>30</option>
-                  <option value={60}>60</option>
-                  <option value={90}>90</option>
-                  <option value={180}>180</option>
-                  <option value={365}>365</option>
+             
 
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Price
-                </label>
-                <input
-                  type="text"
-                  name="price"
-                  value={formData.price}
-                  onChange={handleChange}
-                  placeholder="Enter Price of Playlist"
-                  className="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-indigo-500 outline-none"
-                  required
-                />
-              </div>
+             
 
               {/* Submit */}
               <button
                 type="submit"
+                disabled={isDisabled}
                 className="w-full bg-indigo-600 text-white font-semibold rounded-xl p-3 hover:bg-indigo-700 active:scale-95 transition"
               >
                 Create Playlist
