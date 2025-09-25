@@ -21,11 +21,12 @@ const Test = () => {
   const [data, setData] = useState([]);
   const [modelPopup, setModelPopup] = useState(false);
   const [loader, setLoader] = useState(false);
-  const [isOpen,setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
 
 
   const [questionIndex, setQuestionIndex] = useState(0);
-   const authHeader = useAuthHeader()
+   const [testSeriesName,setTestSeriesName] = useState(localStorage.getItem(LocalStorageKeys.TEST_SERIES_NAME));
+  const authHeader = useAuthHeader()
   const isAuthenticated = useIsAuthenticated()
   const navigate = useNavigate();
 
@@ -46,9 +47,9 @@ const Test = () => {
       const testSeriesId = localStorage.getItem(LocalStorageKeys.TEST_SERIES_ID);
       let attemptId = localStorage.getItem(LocalStorageKeys.ATTEMPT_ID);
       console.log(attemptId)
-      attemptId= attemptId??-1;
-      const resp = await axios.get(`${Baseurl}/test/find-all/${testSeriesId}/${attemptId}`,{
-          headers: {
+      attemptId = attemptId ?? -1;
+      const resp = await axios.get(`${Baseurl}/test/find-all/${testSeriesId}/${attemptId}`, {
+        headers: {
           "Content-Type": "application/json",
           "Authorization": authHeader()
         }
@@ -62,7 +63,7 @@ const Test = () => {
         isCurrent: i === 0,
         questionId: v?.questionId
       })))
-      localStorage.setItem(LocalStorageKeys.ATTEMPT_ID,resp.data?.data?.attemptId);
+      localStorage.setItem(LocalStorageKeys.ATTEMPT_ID, resp.data?.data?.attemptId);
       handleIsCurrentQuestion(questionIndex);
       setLoader(false);
     } catch (err) {
@@ -157,11 +158,12 @@ const Test = () => {
       });
 
     }
-    else if (questionIndex < data.length) {
+    else if (questionIndex == data.length - 1) {
       questionStatus[questionIndex].optAnswer === '' ? handleSetQuestionStatus(questionIndex, QuestionStatus.UNATTEMPTED) : handleSetQuestionStatus(questionIndex, QuestionStatus.ATTEMPTED)
 
       // save last question
       localStorage.setItem("reviewData", JSON.stringify(questionStatus));
+      handleSumbitBtn();//to call the Submit popup
     }
 
   }
@@ -189,31 +191,31 @@ const Test = () => {
     setModelPopup(true);
   }
 
-  const handleFinalSubmitBtn = ()=>{
-     navigate("/result", { replace: true });
+  const handleFinalSubmitBtn = () => {
+    navigate("/result", { replace: true });
   }
 
 
   return (
     <>
       {loader && <>
-              <div className='fixed top-0 left-0 flex w-full min-h-screen justify-center items-center bg-white z-50'>
-                <div className='flex justify-center flex-col items-center gap-4 text-blue-500'>
-                  <div>
-                    <RingLoader size={150} color='#00f' />
-                  </div>
-                  <div>Loading...</div>
-      
-                </div>
-              </div>
-            </>}
+        <div className='fixed top-0 left-0 flex w-full min-h-screen justify-center items-center bg-white z-50'>
+          <div className='flex justify-center flex-col items-center gap-4 text-blue-500'>
+            <div>
+              <RingLoader size={150} color='#00f' />
+            </div>
+            <div>Loading...</div>
+
+          </div>
+        </div>
+      </>}
 
       <div className='nav '>
-        <div className='text-black text-3xl flex justify-center items-center visible md:hidden' onClick={()=>setIsOpen(true)}><MdMenu /></div>
+        <div className='text-black text-3xl flex justify-center items-center visible md:hidden' onClick={() => setIsOpen(true)}><MdMenu /></div>
         <div className="timer">
           <CountdownTimer />
         </div>
-        <div className="subject">Operating System</div>
+        <div className="subject">{testSeriesName}</div>
 
       </div>
 
@@ -221,17 +223,17 @@ const Test = () => {
       <div className='maincontainer'>
         <div className="questionans">
           <QuestionAns question={data[questionIndex]} questionNo={questionIndex + 1} questionStatus={questionStatus} handleOptionSelection={handleOptionSelection} />
+          <div className="btnSection flex gap-2 px-4 font-semibold ">
+            <button className='border-gray-400 border-2 px-3 py-2 rounded-md cursor-pointer' onClick={handlePreviousQuestionBtn}>Previous</button>
+            <button className='bg-purple-800 px-3 py-2 rounded-md cursor-pointer text-white' onClick={handleMarkAndReview}  >Mark for Review</button>
+            <button className='bg-green-400 px-3 py-2 rounded-md cursor-pointer text-white' onClick={handleNextSaveQuestionBtn}>Next/Save</button>
+
+          </div>
         </div>
-        <div className={`questionno mt-5 bg-white md:bg-transparent absolute md:relative top-0 flex justify-center items-center h-screen md:h-fit transition-all ${isOpen?'left-0':'-left-full'} md:left-0`}>
-           <div className="text-3xl top-0 flex w-full justify-end p-4 cursor-pointer text-red-500 absolute visible md:hidden"  onClick={()=>setIsOpen(false)}><MdClose /></div>
+        <div className={`questionno mt-5 bg-white md:bg-transparent absolute md:relative top-0 flex justify-center items-center h-screen md:h-fit transition-all ${isOpen ? 'left-0' : '-left-full'} md:left-0`}>
+          <div className="text-3xl top-0 flex w-full justify-end p-4 cursor-pointer text-red-500 absolute visible md:hidden" onClick={() => setIsOpen(false)}><MdClose /></div>
           <QuestionNo changeQuestionIndex={changeQuestionIndex} totalQuestions={questionStatus} handleSubmit={handleSumbitBtn} />
         </div>
-
-      </div>
-      <div className="btnSection flex gap-2 px-4 font-semibold">
-        <button className='border-gray-400 border-2 px-3 py-2 rounded-md cursor-pointer' onClick={handlePreviousQuestionBtn}>Previous</button>
-        <button className='bg-purple-800 px-3 py-2 rounded-md cursor-pointer text-white' onClick={handleMarkAndReview}  >Mark for Review</button>
-        <button className='bg-green-400 px-3 py-2 rounded-md cursor-pointer text-white' onClick={handleNextSaveQuestionBtn}>Next/Save</button>
 
       </div>
       {
@@ -285,11 +287,11 @@ const Test = () => {
             {/* Final Submit Button */}
             <div className="flex justify-end">
               <button
-      onClick={handleFinalSubmitBtn}
-      className="px-6 py-2 bg-blue-600 text-white rounded-xl shadow-md hover:bg-blue-700 transition"
-    >
-      Final Submit
-    </button>
+                onClick={handleFinalSubmitBtn}
+                className="px-6 py-2 bg-blue-600 text-white rounded-xl shadow-md hover:bg-blue-700 transition"
+              >
+                Final Submit
+              </button>
             </div>
           </div>
         </div>

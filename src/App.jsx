@@ -22,6 +22,7 @@ import TestSeriesPlans from "./components/testseriesplan/TestSeriesPlans.jsx";
 import Plan_List from "./screens/auth/common/Plan_List.jsx";
 import { Bounce, ToastContainer } from 'react-toastify';
 import AuthUserHeader from "./components/header/AuthUserHeader.jsx";
+import UserProfile from "./components/profiles/UserProfile.jsx";
 
 
 
@@ -63,6 +64,7 @@ function App() {
         <Route path="/user" element={<AuthUserHeader />}>
           {/* ✅ child route — no leading slash */}
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="profile" element={<UserProfile />} />
           <Route path="test_playlist" element={<Test_Playlist />} />
           <Route path="list_testseries/:id" element={<TestSeries_List />} />
           <Route path="list_questions" element={<Question_List />} />

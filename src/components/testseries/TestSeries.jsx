@@ -37,9 +37,10 @@ const TestSeries = () => {
       });
   }, []);
 
-  const handleTestSeriesStart=(id)=>{
+  const handleTestSeriesStart=(testSeriesData)=>{
       navigate('/instruction');
-      localStorage.setItem(LocalStorageKeys.TEST_SERIES_ID,id)
+      localStorage.setItem(LocalStorageKeys.TEST_SERIES_ID,testSeriesData?.testSeriesId)
+      localStorage.setItem(LocalStorageKeys.TEST_SERIES_NAME,testSeriesData?.title)
   }
 
   return (
@@ -81,7 +82,7 @@ const TestSeries = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth variant="contained" color="primary" onClick={()=>handleTestSeriesStart(item.testSeriesId)}>
+                  <Button fullWidth variant="contained" color="primary" onClick={()=>handleTestSeriesStart(item)}>
                     View Details
                   </Button>
                 </CardActions>

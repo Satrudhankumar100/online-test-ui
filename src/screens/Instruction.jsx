@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./Instruction.css"
 import { Link, useNavigate } from 'react-router-dom';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
@@ -8,6 +8,7 @@ const Instruction = () => {
 
        const isAuthenticated = useIsAuthenticated()
         const navigate = useNavigate();
+        const [testSeriesName,setTestSeriesName] = useState(localStorage.getItem(LocalStorageKeys.TEST_SERIES_NAME));
 
     const handleClose=()=>{
         alert("Are sure you want to close test");
@@ -22,7 +23,7 @@ const Instruction = () => {
         <>
             <div className="container">
                 <div className="navContainer">
-                    <div className="leftPanel"><h3>1. Topic Test-1 (Digital Electronics-1)   </h3></div>
+                    <div className="leftPanel"><h3>1. Topic Test-1 ({testSeriesName})   </h3></div>
                     <div className="rightPanel">
                         <button className='closeBtn' onClick={handleClose}>close</button>
                     </div>
