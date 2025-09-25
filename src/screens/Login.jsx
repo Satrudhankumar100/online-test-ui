@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
 import { RingLoader } from "react-spinners";
 import AuthRoles from "../utils/AuthRoles.js";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -60,7 +61,7 @@ const Login = () => {
       console.log(resp.data);
     } catch (err) {
       setLoader(false);
-      alert("Invalid User Id and password");
+      toast.error("Invalid User Id and password");
     }
 
 
